@@ -1,10 +1,23 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+const dbUsername = process.env.DBUSERNAME;
+const dbPassword = process.env.DBPASSWORD;
+if (!dbUsername || !dbPassword) {
+  console.error('Please specify the database username and password as environment variables!');
+  process.exit(1);
+}
+const uri = `mongodb+srv://${dbUsername}:${dbPassword}@peerprep.bzetx.mongodb.net/peerprep?retryWrites=true&w=majority`;
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Error connecting to db'));
+db.once('open', console.error.bind(console, 'Db connected successfully'));
+
 app.get('/', (req, res) => res.status(200).json({message: 'ok', data: 'User microservice is working!'}));
 
-app.listen(port, () => console.log(`User microservice running on http://localhost:${port}`));
+module.exports = app;

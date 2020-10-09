@@ -1,17 +1,19 @@
 {
   "name": "user",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the user microservice for PeerPrep.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon ./local.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
