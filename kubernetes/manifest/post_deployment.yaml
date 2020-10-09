@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "post-deployment"
+  namespace: "instaclone"
+  labels:
+    app: post
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post
+  template:
+    metadata:
+      labels:
+        app: post
+    spec:
+      containers:
+        - image: 650965765717.dkr.ecr.ap-southeast-1.amazonaws.com/post:v1
+          imagePullPolicy: Always
+          name: post
+          ports:
+            - containerPort: 5001
