@@ -18,6 +18,17 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connecting to db'));
 db.once('open', console.error.bind(console, 'Db connected successfully'));
 
+const userController = require('./controllers/user-controller');
+
 app.get('/', (req, res) => res.status(200).json({message: 'ok', data: 'User microservice is working!'}));
+
+app.route('/user')
+  .get(userController.index)
+  .post(userController.new);
+
+app.route('/user/:user_id')
+  .get(userController.view)
+  .put(userController.update)
+  .delete(userController.delete);
 
 module.exports = app;
