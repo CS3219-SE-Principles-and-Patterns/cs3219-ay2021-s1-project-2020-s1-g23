@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-service
+  namespace: instaclone
+spec:
+  selector:
+    app: post
+  type: NodePort
+  ports:
+   -  protocol: TCP
+      port: 5001
+      targetPort: 5001
