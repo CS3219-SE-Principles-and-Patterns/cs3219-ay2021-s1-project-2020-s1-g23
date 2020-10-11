@@ -1,6 +1,67 @@
 // @import './variables';
 // To be implemented
 
+
+html *
+{
+   font-family: Signika sans-serif !important;
+}
+
 .text-center {
     text-align: center;
+}
+
+.vert-center-md {
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
+
+.vert-center-sm {
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.text-white {
+    color: white;
+}
+
+.inner-flex-top {
+    display: flex;
+    justify-content: center;
+    height: 100%;  
+}
+
+.main-top {
+    flex: 0 0 30%;
+}
+
+.aside-top {
+    flex: 0 0 30%;
+}
+
+.pp-button {
+    font-size:40px;
+    width: 180px;
+    height: 57px;
+
+    // text-transform: capitalize;
+}
+
+.bg-light-blue {
+    background-color: #0275d8 ;
+}
+
+.page-icon {
+    width: 370px;
+    height: 370px;
+}
+
+// Header
+
+.navbar-nav .nav-link {
+    color: red;
+}
+
+.nav-font-size {
+    font-size: 30px;
 }

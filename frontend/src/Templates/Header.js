@@ -6,7 +6,9 @@ const Header = () => {
   return (
     <Navbar bg="primary" variant="dark">
       <Nav className="mr-auto">
-        <Nav.Link href="/">PeerPrep</Nav.Link>
+        <Nav.Link className="nav-font-size" href="/">
+          PeerPrep
+        </Nav.Link>
       </Nav>
       <Button variant="outline-light" href="/login">
         Login
