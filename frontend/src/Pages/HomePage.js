@@ -4,7 +4,7 @@ import Layout from '../Templates/Layout';
 const HomePage = () => {
   return (
     <Layout>
-      <p>Home Page.</p>
+      <h1 className="text-center pt-5">Home Page</h1>
     </Layout>
   );
 };

@@ -4,7 +4,7 @@ import Layout from '../Templates/Layout';
 const LoginPage = () => {
   return (
     <Layout>
-      <p>Login Page.</p>
+      <h1 className="text-center pt-5">Login Page</h1>
     </Layout>
   );
 };
