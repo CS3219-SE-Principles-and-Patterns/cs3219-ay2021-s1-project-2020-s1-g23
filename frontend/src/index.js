@@ -6,15 +6,15 @@ import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import Login from './Pages/Login';
-import App from './App';
+import HomePage from './Pages/HomePage';
+import LoginPage from './Pages/LoginPage';
 import NotFoundPage from './Pages/NotFoundPage';
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={App} />
-      <Route path="/login" component={Login} />
+      <Route exact path="/" component={HomePage} />
+      <Route path="/login" component={LoginPage} />
       <Route path="/*" component={NotFoundPage} />
     </Switch>
   </BrowserRouter>,

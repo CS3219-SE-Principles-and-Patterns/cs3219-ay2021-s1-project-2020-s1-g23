@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../Templates/Layout';
 
-const Login = () => {
+const LoginPage = () => {
   return (
     <Layout>
       <p>Login Page.</p>
@@ -9,4 +9,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
