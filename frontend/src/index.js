@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import HomePage from './Pages/HomePage';
 import LoginPage from './Pages/LoginPage';
+import SignUpPage from './Pages/SignUpPage';
 import NotFoundPage from './Pages/NotFoundPage';
 
 ReactDOM.render(
@@ -17,6 +18,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/signup" component={SignUpPage} />
       <Route path="/*" component={NotFoundPage} />
     </Switch>
   </BrowserRouter>,

@@ -10,9 +10,11 @@ const HomePage = () => {
       <div className="container-fluid text-center vert-center-md">
         <h1 className="display-4">PeerPrep</h1>
         <h3 className="pt-3">Acing tech interviews 2 at a time</h3>
-        <Button variant="primary" size="lg" className="mt-5 pp-button">
-          Sign Up
-        </Button>{' '}
+        <a href="/signup">
+          <Button variant="primary" size="lg" className="mt-5 pp-button">
+            Sign Up
+          </Button>
+        </a>
       </div>
 
       <div className="container-fluid text-center bg-light-blue vert-center-sm">
