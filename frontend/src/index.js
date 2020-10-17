@@ -1,13 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+// import './index.css';
+import './styles/main.scss';
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
+import HomePage from './Pages/HomePage';
+import LoginPage from './Pages/LoginPage';
+import SignUpPage from './Pages/SignUpPage';
+import NotFoundPage from './Pages/NotFoundPage';
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/signup" component={SignUpPage} />
+      <Route path="/*" component={NotFoundPage} />
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
