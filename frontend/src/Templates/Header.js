@@ -1,8 +1,12 @@
 import React from 'react';
 
 import { Navbar, Nav, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser, signoutUser } from '../redux/slices/userSlice';
 
 const Header = () => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   return (
     <Navbar bg="primary" variant="dark">
       <Nav className="mr-auto">
@@ -10,9 +14,15 @@ const Header = () => {
           PeerPrep
         </Nav.Link>
       </Nav>
-      <Button variant="outline-light" href="/login">
-        Login
-      </Button>
+      {user ? (
+        <Button variant="outline-light" onClick={() => dispatch(signoutUser())}>
+          Logout
+        </Button>
+      ) : (
+        <Button variant="outline-light" href="/login">
+          Login
+        </Button>
+      )}
     </Navbar>
   );
 };

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Layout from '../Templates/Layout';
 import * as Utils from '../utils';
+import { loginUser } from '../redux/slices/userSlice';
 
 function getErrorLoginData(loginData) {
   if (!loginData.email) {
@@ -23,6 +26,8 @@ const initialState = { email: '', password: '' };
 function LoginPage() {
   const [loginData, setLoginData] = useState(initialState);
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   // update login fields
   const handleChange = ({ target: { value, name } }) => {
@@ -34,10 +39,8 @@ function LoginPage() {
     if (!errorMsg) {
       setError('');
       const email = Utils.trimValue(loginData.email);
-
-      // *** PLACEHOLDER CODE: Send to backend ***
-      console.log(`Email: ${email}`);
-      console.log(`Password: ${loginData.password}`);
+      dispatch(loginUser(email, loginData.password));
+      history.push('/');
     } else {
       setError(errorMsg);
     }
