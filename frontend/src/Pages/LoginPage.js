@@ -48,7 +48,7 @@ function LoginPage() {
 
   return (
     <Layout>
-      <div className="container fixed-bg text-center">
+      <div className="container fixed-bg-1 text-center">
         <h1 className="text-center display-4 pb-5">PeerPrep</h1>
         <form>
           <input

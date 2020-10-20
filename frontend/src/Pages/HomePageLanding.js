@@ -16,10 +16,10 @@ const HomePageLanding = () => {
 
       <div className="container-fluid text-center bg-light-blue vert-center-sm">
         <div className="inner-flex-top">
-          <div className="main-top">
+          <div className="main-30">
             <img className="page-icon" src="/book.png" alt="How it works" />
           </div>
-          <div className="aside-top vert-center-md text-white">
+          <div className="aside-30 vert-center-md text-white">
             <h1>How it works</h1>
             <p className="pt-1">Sign up first. Then we talk later.</p>
           </div>
