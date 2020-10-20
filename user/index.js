@@ -26,6 +26,9 @@ app.route('/user')
   .get(userController.index)
   .post(userController.new);
 
+app.route('/user/login/:email')
+  .post(userController.login);
+
 app.route('/user/:user_id')
   .get(userController.view)
   .put(userController.update)

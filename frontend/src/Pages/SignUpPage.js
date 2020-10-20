@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Layout from '../Templates/Layout';
 import * as Utils from '../utils';
+import { signupUser } from '../redux/slices/userSlice';
 
 function getErrorSignUpData(signUpData) {
   if (!signUpData.email) {
@@ -37,6 +40,8 @@ const initialState = {
 function SignUpPage() {
   const [signUpData, setSignUpData] = useState(initialState);
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   // update signup fields
   const handleChange = ({ target: { value, name } }) => {
@@ -48,11 +53,8 @@ function SignUpPage() {
     if (!errorMsg) {
       setError('');
       const email = Utils.trimValue(signUpData.email);
-
-      // *** PLACEHOLDER CODE: Send to backend ***
-      console.log(`Email: ${email}`);
-      console.log(`Nickname: ${signUpData.nickname}`);
-      console.log(`Password: ${signUpData.password}`);
+      dispatch(signupUser(email, signUpData.password, signUpData.nickname));
+      history.push('/');
     } else {
       setError(errorMsg);
     }
