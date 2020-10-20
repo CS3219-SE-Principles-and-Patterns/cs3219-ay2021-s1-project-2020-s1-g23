@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import HomePage from './Pages/HomePage';
+import HomePage from './Pages/Home/HomePage';
 import LoginPage from './Pages/LoginPage';
 import SignUpPage from './Pages/SignUpPage';
 import NotFoundPage from './Pages/NotFoundPage';

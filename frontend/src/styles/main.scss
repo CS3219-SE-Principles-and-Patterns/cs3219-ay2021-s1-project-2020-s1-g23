@@ -76,7 +76,10 @@ html * {
 .fixed-bg-2 {
     padding-top: 50px;
     padding-bottom: 50px;
-  
+    // padding-right: 50px;
+    // padding-left: 50px;
+
+    
     width: 90% !important;
     // max-width: 1400px !important;
     min-height: 630px;
@@ -87,7 +90,7 @@ html * {
   }
 
 .pp-button {
-    font-size:40px;
+    font-size:22px !important;
     width: 180px;
     height: 57px;
 
@@ -95,7 +98,7 @@ html * {
 }
 
 .pp-button-long {
-    font-size:40px;
+    font-size:25px !important;
     width: 280px;
     height: 57px;
 
