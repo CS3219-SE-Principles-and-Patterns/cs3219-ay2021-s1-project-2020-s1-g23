@@ -63,7 +63,7 @@ function LoginPage() {
           <input
             className="input-top"
             name="password"
-            type="text"
+            type="password"
             onChange={handleChange}
             placeholder="Password"
             value={loginData.password}
