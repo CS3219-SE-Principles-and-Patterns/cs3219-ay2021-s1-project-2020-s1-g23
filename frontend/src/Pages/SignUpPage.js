@@ -62,7 +62,7 @@ function SignUpPage() {
 
   return (
     <Layout>
-      <div className="container fixed-bg text-center">
+      <div className="container fixed-bg-1 text-center">
         <h1 className="text-center display-4 pb-5">PeerPrep</h1>
         <form>
           <input
@@ -86,7 +86,7 @@ function SignUpPage() {
           <input
             className="input-top"
             name="password"
-            type="text"
+            type="password"
             onChange={handleChange}
             placeholder="Password"
             value={signUpData.password}
@@ -95,9 +95,9 @@ function SignUpPage() {
           <input
             className="input-top"
             name="retypePassword"
-            type="text"
+            type="password"
             onChange={handleChange}
-            placeholder="Retype assword"
+            placeholder="Retype Password"
             value={signUpData.retypePassword}
           />
         </form>
