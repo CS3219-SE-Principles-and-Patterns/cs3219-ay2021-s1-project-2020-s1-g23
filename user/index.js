@@ -34,4 +34,6 @@ app.route('/user/:user_id')
   .put(userController.update)
   .delete(userController.delete);
 
-module.exports = app;
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => console.log(`Server listening at http://localhost:${port}`));
