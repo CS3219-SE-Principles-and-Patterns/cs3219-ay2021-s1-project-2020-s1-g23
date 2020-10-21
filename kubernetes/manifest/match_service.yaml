@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: post-service
-  namespace: instaclone
+  name: match-service
+  namespace: ipp
 spec:
   selector:
-    app: post
+    app: match
   type: NodePort
   ports:
    -  protocol: TCP
-      port: 5001
-      targetPort: 5001
+      port: 5000
+      targetPort: 5000

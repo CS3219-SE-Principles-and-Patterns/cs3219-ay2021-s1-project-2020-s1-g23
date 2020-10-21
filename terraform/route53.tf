@@ -1,10 +1,10 @@
-# resource "aws_route53_zone" "main" {
-#   name = "simp.social"
-# }
+resource "aws_route53_zone" "main" {
+  name = "peerprep.live"
+}
 
 # resource "aws_route53_record" "cloudfront" {
 #   zone_id = aws_route53_zone.main.zone_id
-#   name    = "simp.social"
+#   name    = "peerprep.live"
 #   type    = "A"
 
 #   alias {
@@ -14,15 +14,15 @@
 #   }
 # }
 
-# resource "aws_acm_certificate" "cert" {
-#   domain_name       = "simp.social"
-#   validation_method = "DNS"
+resource "aws_acm_certificate" "cert" {
+  domain_name       = "peerprep.live"
+  validation_method = "DNS"
 
-#   tags = {
-#     Environment = "production"
-#   }
+  tags = {
+    Environment = "production"
+  }
 
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-# }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
