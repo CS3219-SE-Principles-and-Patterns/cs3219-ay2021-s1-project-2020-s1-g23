@@ -15,9 +15,15 @@ resource "aws_iam_role" "main-cluster" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "eks.amazonaws.com"
+        "Federated": "arn:aws:iam::425563513848:oidc-provider/oidc.eks.ap-southeast-1.amazonaws.com/id/FE6B205BFA209F05C90B29044479FB95"
       },
-      "Action": "sts:AssumeRole"
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.ap-southeast-1.amazonaws.com/id/FE6B205BFA209F05C90B29044479FB95:aud": "sts.amazonaws.com",
+          "oidc.eks.ap-southeast-1.amazonaws.com/id/FE6B205BFA209F05C90B29044479FB95:sub": "system:serviceaccount:kube-system:alb-ingress-controller"
+        }
+      }
     }
   ]
 }
@@ -26,6 +32,11 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "main-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.main-cluster.name
+}
+
+resource "aws_iam_role_policy_attachment" "main-cluster-AmazonALB" {
+  policy_arn = "arn:aws:iam::425563513848:policy/ALBIngressControllerIAMPolicy"
   role       = aws_iam_role.main-cluster.name
 }
 
@@ -67,5 +78,6 @@ resource "aws_eks_cluster" "main" {
 
   depends_on = [
     aws_iam_role_policy_attachment.main-cluster-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.main-cluster-AmazonALB,
   ]
 }
