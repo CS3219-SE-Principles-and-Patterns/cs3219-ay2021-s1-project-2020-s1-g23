@@ -4,7 +4,7 @@
   "description": "This is the user microservice for PeerPrep.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./local.js"
+    "start": "nodemon ./index.js"
   },
   "keywords": [],
   "author": "",
