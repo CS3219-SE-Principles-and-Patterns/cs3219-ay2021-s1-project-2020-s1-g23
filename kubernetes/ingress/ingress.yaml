@@ -22,6 +22,10 @@ spec:
             backend:
               serviceName: ssl-redirect
               servicePort: use-annotation
+          - path: /user/*
+            backend:
+              serviceName: user-service
+              servicePort: 5001
           - path: /match/*
             backend:
               serviceName: match-service
