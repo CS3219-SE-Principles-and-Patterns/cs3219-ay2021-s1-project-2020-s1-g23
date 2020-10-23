@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
-
-// import { useHistory } from 'react-router-dom';
 
 import { getMatch } from '../../redux/slices/matchSlice';
 
@@ -12,23 +11,45 @@ const HomePageUser = ({ user }) => {
   const [show, setShow] = useState(false);
 
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
 
   const handleShow = (value) => {
     setShow(true);
     setDifficulty(value);
 
-    const obj = JSON.parse(localStorage.getItem('user'));
-    const userEmail = obj.email;
+    const userObj = JSON.parse(localStorage.getItem('user'));
+    const userEmail = userObj.email;
 
-    dispatch(getMatch(userEmail));
+    // MVP: Naive implementation of matching
 
-    // console.log(localStorage.user['email']);
+    // If accidentally quit, return to session.
 
-    // dispatch(getMatch(email));
+    let matchObj =
+      localStorage.getItem('match') === undefined
+        ? ''
+        : JSON.parse(localStorage.getItem('match'));
+    if (matchObj.email) {
+      setShow(false);
+      history.push('/interview');
+      return;
+    }
 
-    // *** Api call here
-    console.log(value);
+    const counter = 2;
+    dispatch(getMatch(userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
+
+    setTimeout(() => {
+      matchObj =
+        localStorage.getItem('match') === undefined
+          ? ''
+          : JSON.parse(localStorage.getItem('match')); // checks result after 6 seconds
+      if (matchObj.email) {
+        console.log(matchObj.email);
+        setShow(false);
+        history.push('/interview');
+      } else {
+        setShow(false);
+      }
+    }, 6000);
   };
 
   const handleClose = () => setShow(false);

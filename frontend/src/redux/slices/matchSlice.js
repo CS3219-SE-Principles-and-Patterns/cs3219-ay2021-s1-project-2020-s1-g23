@@ -15,7 +15,13 @@ export const matchSlice = createSlice({
 
 export const { setMatch } = matchSlice.actions;
 
-export const getMatch = (email) => (dispatch) => {
+export const getMatch = (email, counter) => (dispatch) => {
+  if (counter === 0) {
+    console.log('exit');
+    return;
+  }
+  const nextCounter = counter - 1;
+
   const apiUrl = `${API_HOST}/match/get?email=${email}`;
   // console.log(apiUrl);
   fetch(apiUrl, {
@@ -27,9 +33,14 @@ export const getMatch = (email) => (dispatch) => {
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
-      if (result.status === true || result.status === false) {
+      if (result.status === true) {
         saveState(MATCH_STATE_KEY, result);
         dispatch(setMatch(result));
+      } else if (result.status === false) {
+        // recurse with timeout until succeed
+        setTimeout(() => {
+          dispatch(getMatch(email, nextCounter));
+        }, 5000);
       } else {
         throw new Error(result.message);
       }
