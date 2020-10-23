@@ -8,6 +8,7 @@ import SignUpPage from './Pages/SignUpPage';
 import HistoryPage from './Pages/HistoryPage';
 import InterviewPage from './Pages/InterviewPage';
 import NotFoundPage from './Pages/NotFoundPage';
+import NotAuthorisedPage from './Pages/NotAuthorisedPage';
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
       <Route path="/signup" component={SignUpPage} />
       <Route path="/history" component={HistoryPage} />
       <Route path="/interview" component={InterviewPage} />
+      <Route path="/notauthorised" component={NotAuthorisedPage} />
       <Route path="/*" component={NotFoundPage} />
     </Switch>
   );

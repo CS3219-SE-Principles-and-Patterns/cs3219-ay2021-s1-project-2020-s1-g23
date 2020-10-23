@@ -3,11 +3,18 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 // import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Layout from '../Templates/Layout';
 
+import { selectUser } from '../redux/slices/userSlice';
+
 function InterviewPage() {
-  //   const dispatch = useDispatch();
-  //   const history = useHistory();
+  const history = useHistory();
+  const user = useSelector(selectUser);
+  if (!user) {
+    history.push('/notauthorised');
+  }
 
   return (
     <Layout>
