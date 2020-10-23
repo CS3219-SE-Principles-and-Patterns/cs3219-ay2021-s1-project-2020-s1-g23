@@ -25,7 +25,8 @@ const HomePageUser = ({ user }) => {
     // If accidentally quit, return to session.
 
     let matchObj =
-      localStorage.getItem('match') === undefined
+      localStorage.getItem('match') === undefined ||
+      localStorage.getItem('match') === null
         ? ''
         : JSON.parse(localStorage.getItem('match'));
     if (matchObj.email) {
@@ -39,7 +40,8 @@ const HomePageUser = ({ user }) => {
 
     setTimeout(() => {
       matchObj =
-        localStorage.getItem('match') === undefined
+        localStorage.getItem('match') === undefined ||
+        localStorage.getItem('match') === null
           ? ''
           : JSON.parse(localStorage.getItem('match')); // checks result after 6 seconds
       if (matchObj.email) {
