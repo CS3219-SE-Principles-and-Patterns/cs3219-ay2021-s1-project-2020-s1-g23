@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from 'react-redux';
 import DifficultyModal from './DifficultyModal';
+
+// import { useHistory } from 'react-router-dom';
+
+import { getMatch } from '../../redux/slices/matchSlice';
 
 const HomePageUser = ({ user }) => {
   const [difficulty, setDifficulty] = useState('');
   const [show, setShow] = useState(false);
 
+  const dispatch = useDispatch();
+  // const history = useHistory();
+
   const handleShow = (value) => {
     setShow(true);
     setDifficulty(value);
+
+    const obj = JSON.parse(localStorage.getItem('user'));
+    const userEmail = obj.email;
+
+    dispatch(getMatch(userEmail));
+
+    // console.log(localStorage.user['email']);
+
+    // dispatch(getMatch(email));
+
     // *** Api call here
     console.log(value);
   };

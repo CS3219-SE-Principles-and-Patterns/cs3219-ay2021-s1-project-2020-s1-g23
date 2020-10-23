@@ -25,7 +25,6 @@ const EndSessionModal = ({ handleClose, show }) => {
           className="xs-icon mt-4"
           src="/one.png"
           alt="1"
-          name="1"
           onClick={(e) => handleClick(e.target.alt)}
         />
         <input

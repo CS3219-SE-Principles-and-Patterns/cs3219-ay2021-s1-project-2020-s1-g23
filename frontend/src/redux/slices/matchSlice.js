@@ -1,0 +1,47 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { API_HOST } from '../../consts';
+import { loadState, removeState, saveState } from '../localStorage';
+
+const MATCH_STATE_KEY = 'match';
+const persistedMatch = loadState(MATCH_STATE_KEY);
+
+export const matchSlice = createSlice({
+  name: 'match',
+  initialState: persistedMatch,
+  reducers: {
+    setMatch: (state, action) => action.payload,
+  },
+});
+
+export const { setMatch } = matchSlice.actions;
+
+export const getMatch = (email) => (dispatch) => {
+  const apiUrl = `${API_HOST}/match/get?email=${email}`;
+  // console.log(apiUrl);
+  fetch(apiUrl, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      if (result.status === true || result.status === false) {
+        saveState(MATCH_STATE_KEY, result);
+        dispatch(setMatch(result));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const endMatch = () => (dispatch) => {
+  removeState(MATCH_STATE_KEY);
+  dispatch(setMatch(null));
+};
+
+export const selectMatch = (state) => state.match;
+
+export default matchSlice.reducer;
