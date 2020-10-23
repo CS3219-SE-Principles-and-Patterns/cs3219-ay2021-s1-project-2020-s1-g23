@@ -6,7 +6,7 @@ import HomePage from './Pages/Home/HomePage';
 import LoginPage from './Pages/LoginPage';
 import SignUpPage from './Pages/SignUpPage';
 import HistoryPage from './Pages/HistoryPage';
-import InterviewPage from './Pages/InterviewPage';
+import InterviewPage from './Pages/Interview/InterviewPage';
 import NotFoundPage from './Pages/NotFoundPage';
 import NotAuthorisedPage from './Pages/NotAuthorisedPage';
 

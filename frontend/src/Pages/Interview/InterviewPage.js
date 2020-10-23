@@ -1,13 +1,13 @@
-import React from 'react';
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 // import { useDispatch } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Layout from '../Templates/Layout';
+import Layout from '../../Templates/Layout';
 
-import { selectUser } from '../redux/slices/userSlice';
+import { selectUser } from '../../redux/slices/userSlice';
+
+import EndSessionModal from './EndSessionModal';
 
 function InterviewPage() {
   const history = useHistory();
@@ -15,6 +15,11 @@ function InterviewPage() {
   if (!user) {
     history.push('/notauthorised');
   }
+
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   return (
     <Layout>
@@ -48,12 +53,18 @@ function InterviewPage() {
 
           <div className="div-right">
             <div className="div-right-adjust-5">
-              <Button variant="primary" size="lg" className="mt-5 pp-button">
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-5 pp-button"
+                onClick={handleShow}
+              >
                 End Session
               </Button>
             </div>
           </div>
         </div>
+        <EndSessionModal handleClose={handleClose} show={show} />{' '}
       </div>
     </Layout>
   );
