@@ -35,7 +35,6 @@ const HomePageUser = ({ user }) => {
                 points away from the next rank. Keep it up!
               </h3>
               <a href="/history">
-                {/* To be implemented */}
                 <Button
                   variant="primary"
                   size="lg"
