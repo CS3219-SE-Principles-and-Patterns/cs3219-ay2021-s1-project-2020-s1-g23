@@ -20,16 +20,16 @@ db.once('open', console.error.bind(console, 'Db connected successfully'));
 
 const userController = require('./controllers/user-controller');
 
-app.get('/', (req, res) => res.status(200).json({message: 'ok', data: 'User microservice is working!'}));
+app.get('/user', (req, res) => res.status(200).json({message: 'ok', data: 'User microservice is working!'}));
 
-app.route('/user')
+app.route('/user/user/')
   .get(userController.index)
   .post(userController.new);
 
 app.route('/user/login/:email')
   .post(userController.login);
 
-app.route('/user/:user_id')
+app.route('/user/edit/:user_id')
   .get(userController.view)
   .put(userController.update)
   .delete(userController.delete);

@@ -2,9 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "user-deployment"
-    annotations:
-      fluxcd.io/automated: "true"
-  namespace: "instaclone"
+  namespace: "ipp"
   labels:
     app: user
 spec:
@@ -18,8 +16,8 @@ spec:
         app: user
     spec:
       containers:
-        - image: 650965765717.dkr.ecr.ap-southeast-1.amazonaws.com/test:d940c96a1efdbd710aa183a74e6f91f7af7b12f6
+        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/user:v1
           imagePullPolicy: Always
           name: user
           ports:
-            - containerPort: 5000
+            - containerPort: 5001
