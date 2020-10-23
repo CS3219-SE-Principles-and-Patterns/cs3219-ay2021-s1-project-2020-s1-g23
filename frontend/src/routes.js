@@ -6,6 +6,7 @@ import HomePage from './Pages/Home/HomePage';
 import LoginPage from './Pages/LoginPage';
 import SignUpPage from './Pages/SignUpPage';
 import HistoryPage from './Pages/HistoryPage';
+import InterviewPage from './Pages/InterviewPage';
 import NotFoundPage from './Pages/NotFoundPage';
 
 const Routes = () => {
@@ -15,6 +16,7 @@ const Routes = () => {
       <Route path="/login" component={LoginPage} />
       <Route path="/signup" component={SignUpPage} />
       <Route path="/history" component={HistoryPage} />
+      <Route path="/interview" component={InterviewPage} />
       <Route path="/*" component={NotFoundPage} />
     </Switch>
   );

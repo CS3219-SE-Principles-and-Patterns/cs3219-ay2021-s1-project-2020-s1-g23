@@ -26,9 +26,11 @@ const HomePageUser = ({ user }) => {
         <div className="inner-flex-top vert-center-sm">
           <div className="main-50">
             <div className="container fixed-bg-2 text-center">
-              <h1 className="display-4 pb-5">ELO: xxxx</h1>
+              <h1 className="display-4 pb-5">ELO: xxxx</h1>{' '}
+              {/* TODO: Get real ELO here */}
               <h3 className="pt-3 pb-3">Your current rank is</h3>
-              <h1 className="display-5 text-blue"> Aspiring Newbie</h1>
+              <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
+              {/* TODO: Define constants to map ELO to rank */}
               <h3 className="pt-3 pb-5">
                 You are
                 <span className="text-strong"> xxxx </span>
