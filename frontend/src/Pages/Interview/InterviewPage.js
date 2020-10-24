@@ -34,7 +34,6 @@ function InterviewPage() {
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  console.log(messages);
   return (
     <Layout>
       <div className="inner-flex-top vert-center-sm">
