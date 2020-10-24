@@ -11,23 +11,27 @@ import Layout from '../../Templates/Layout';
 import { selectUser } from '../../redux/slices/userSlice';
 
 import EndSessionModal from './EndSessionModal';
+import { selectMatch } from '../../redux/slices/matchSlice';
+import { generateSessionId } from '../../utils';
 
 const chatSocket = io('http://localhost:3000');
 
 function InterviewPage() {
   const history = useHistory();
   const user = useSelector(selectUser);
+  const match = useSelector(selectMatch);
   const [show, setShow] = useState(false);
   const [sendingMsg, setSendingMsg] = useState('');
   const [messages, setMessages] = useState([]);
+  const sessionId = generateSessionId(user.email, match.email);
   useEffect(() => {
     chatSocket.on('connect', () =>
       setMessages((oldMessages) => [...oldMessages, 'You are connected!'])
     );
-    chatSocket.on('newMessage', (message) =>
+    chatSocket.on(sessionId, (message) =>
       setMessages((oldMessages) => [...oldMessages, message])
     );
-  }, []);
+  }, [sessionId]);
   if (!user) {
     history.push('/notauthorised');
   }
@@ -68,7 +72,12 @@ function InterviewPage() {
               </Form.Group>
             </Form.Row>
             <Button
-              onClick={() => chatSocket.emit('newMessage', sendingMsg)}
+              onClick={() =>
+                chatSocket.emit('newMessage', {
+                  sessionId,
+                  msg: sendingMsg,
+                })
+              }
               type="submit"
               style={{ marginRight: '10px' }}
             >
