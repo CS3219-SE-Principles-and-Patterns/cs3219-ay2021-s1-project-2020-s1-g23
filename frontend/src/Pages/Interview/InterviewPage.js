@@ -80,7 +80,7 @@ function InterviewPage() {
               <div className="chat-message-container" id="chat-message-container">
                 {messages.map((m, i) => (
                   <div key={m.sender + m.msg + i} className={m.sender === user['nickname'] ? "chat-bubble-right" : "chat-bubble-left"}>
-                    <Typography style={{textTransform: 'capitalize'}}>{m.sender}</Typography>
+                    <Typography variant="caption" style={{textTransform: 'capitalize'}} color="textSecondary">{m.sender}</Typography>
                     <Chip label={m.msg}/>
                   </div>
                 ))}
