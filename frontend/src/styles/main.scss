@@ -6,6 +6,12 @@ html * {
    font-family: Signika, sans-serif !important;
 }
 
+html, body, #root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .text-center {
     text-align: center;
 }
@@ -51,7 +57,7 @@ html * {
 }
 
 .textarea-minheight {
-    min-height: 450px;
+    flex: 1;
 }
 
 .inner-flex-top {
