@@ -2,11 +2,19 @@ import React from 'react';
 
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { selectUser, signoutUser } from '../redux/slices/userSlice';
 
 const Header = () => {
   const user = useSelector(selectUser);
+  const history = useHistory();
   const dispatch = useDispatch();
+
+  function signOutAndPush() {
+    dispatch(signoutUser());
+    history.push('/');
+  }
+
   return (
     <Navbar bg="primary" variant="dark">
       <Nav className="mr-auto">
@@ -15,7 +23,7 @@ const Header = () => {
         </Nav.Link>
       </Nav>
       {user ? (
-        <Button variant="outline-light" onClick={() => dispatch(signoutUser())}>
+        <Button variant="outline-light" onClick={() => signOutAndPush()}>
           Logout
         </Button>
       ) : (

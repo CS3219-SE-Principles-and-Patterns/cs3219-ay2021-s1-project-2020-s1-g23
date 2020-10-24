@@ -1,16 +1,57 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
+
+import { getMatch } from '../../redux/slices/matchSlice';
 
 const HomePageUser = ({ user }) => {
   const [difficulty, setDifficulty] = useState('');
   const [show, setShow] = useState(false);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const handleShow = (value) => {
     setShow(true);
     setDifficulty(value);
-    // *** Api call here
-    console.log(value);
+
+    const userObj = JSON.parse(localStorage.getItem('user'));
+    const userEmail = userObj.email;
+
+    // MVP: Naive implementation of matching
+
+    // If accidentally quit, return to session.
+
+    let matchObj =
+      localStorage.getItem('match') === undefined ||
+      localStorage.getItem('match') === null
+        ? ''
+        : JSON.parse(localStorage.getItem('match'));
+    if (matchObj.email) {
+      setShow(false);
+      history.push('/interview');
+      return;
+    }
+
+    const counter = 2;
+    dispatch(getMatch(userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
+
+    setTimeout(() => {
+      matchObj =
+        localStorage.getItem('match') === undefined ||
+        localStorage.getItem('match') === null
+          ? ''
+          : JSON.parse(localStorage.getItem('match')); // checks result after 6 seconds
+      if (matchObj.email) {
+        console.log(matchObj.email);
+        setShow(false);
+        history.push('/interview');
+      } else {
+        setShow(false);
+      }
+    }, 6000);
   };
 
   const handleClose = () => setShow(false);
@@ -26,16 +67,17 @@ const HomePageUser = ({ user }) => {
         <div className="inner-flex-top vert-center-sm">
           <div className="main-50">
             <div className="container fixed-bg-2 text-center">
-              <h1 className="display-4 pb-5">ELO: xxxx</h1>
+              <h1 className="display-4 pb-5">ELO: xxxx</h1>{' '}
+              {/* TODO: Get real ELO here */}
               <h3 className="pt-3 pb-3">Your current rank is</h3>
-              <h1 className="display-5 text-blue"> Aspiring Newbie</h1>
+              <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
+              {/* TODO: Define constants to map ELO to rank */}
               <h3 className="pt-3 pb-5">
                 You are
                 <span className="text-strong"> xxxx </span>
                 points away from the next rank. Keep it up!
               </h3>
               <a href="/history">
-                {/* To be implemented */}
                 <Button
                   variant="primary"
                   size="lg"

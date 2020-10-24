@@ -16,7 +16,9 @@ export const userSlice = createSlice({
 export const { setUser } = userSlice.actions;
 
 export const loginUser = (email, password) => (dispatch) => {
-  fetch(`${API_HOST}/user/login/${email}`, {
+  const apiUrl = `${API_HOST}/user/login/${email}`;
+  // console.log(apiUrl);
+  fetch(apiUrl, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -25,6 +27,7 @@ export const loginUser = (email, password) => (dispatch) => {
   })
     .then((response) => response.json())
     .then((result) => {
+      // console.log(result);
       if (result.status === 'success') {
         saveState(USER_STATE_KEY, result.data);
         dispatch(setUser(result.data));
@@ -32,7 +35,7 @@ export const loginUser = (email, password) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert(err));
+    .catch((err) => console.log(err));
 };
 
 export const signoutUser = () => (dispatch) => {
@@ -41,7 +44,7 @@ export const signoutUser = () => (dispatch) => {
 };
 
 export const signupUser = (email, password, nickname) => (dispatch) => {
-  fetch(`${API_HOST}/user`, {
+  fetch(`${API_HOST}/user/user`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -57,7 +60,7 @@ export const signupUser = (email, password, nickname) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert(err));
+    .catch((err) => console.log(err));
 };
 
 export const selectUser = (state) => state.user;

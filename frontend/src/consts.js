@@ -1,1 +1,3 @@
-export const API_HOST = 'http://localhost:8080';
+/* eslint-disable */ 
+export const API_HOST = 'https://api.peerprep.live';
+

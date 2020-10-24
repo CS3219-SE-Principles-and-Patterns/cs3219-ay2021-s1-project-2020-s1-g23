@@ -50,6 +50,9 @@ html * {
     font-size: 40px;
 }
 
+.textarea-minheight {
+    min-height: 450px;
+}
 
 .inner-flex-top {
     display: flex;
@@ -89,6 +92,51 @@ html * {
     border-radius: 30px;
   }
 
+  .fixed-bg-3 {
+    padding-top: 10px;
+    padding-bottom: 50px;
+    margin-top: 50px;
+    
+    width: 100% !important;
+    min-height: 230px;
+    
+    background: #F7F7F7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+  }
+
+  .fixed-bg-question {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    
+    background: #F7F7F7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+  }
+
+  .fixed-bg-chat {
+    margin-top: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    min-height: 283px;
+    
+    background: #F7F7F7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+  }
+
+.div-right {
+    display: flex; 
+    justify-content: flex-end
+}
+
+.div-right-adjust-5 {
+    padding-right: 5%;
+}
+
 .pp-button {
     font-size:22px !important;
     width: 180px;
@@ -117,6 +165,16 @@ html * {
 .small-icon {
     width: 230px;
     height: 230px;
+}
+
+.xs-icon {
+    cursor: pointer;
+
+    margin-left: 6px;
+    margin-right: 6px;
+
+    width: 60px;
+    height: 60px;
 }
 
 // Header
