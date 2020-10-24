@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
 // import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -9,18 +12,29 @@ import { selectUser } from '../../redux/slices/userSlice';
 
 import EndSessionModal from './EndSessionModal';
 
+const chatSocket = io('http://localhost:3000');
+
 function InterviewPage() {
   const history = useHistory();
   const user = useSelector(selectUser);
+  const [show, setShow] = useState(false);
+  const [sendingMsg, setSendingMsg] = useState('');
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    chatSocket.on('connect', () =>
+      setMessages((oldMessages) => [...oldMessages, 'You are connected!'])
+    );
+    chatSocket.on('newMessage', (message) =>
+      setMessages((oldMessages) => [...oldMessages, message])
+    );
+  }, []);
   if (!user) {
     history.push('/notauthorised');
   }
 
-  const [show, setShow] = useState(false);
-
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-
+  console.log(messages);
   return (
     <Layout>
       <div className="inner-flex-top vert-center-sm">
@@ -41,6 +55,26 @@ function InterviewPage() {
           <div className="container fixed-bg-chat">
             <h3 className="display-5 text-center">Chat (Placeholder)</h3>
             {/* Chat UI */}
+            {messages.map((m) => (
+              <span key={m}>{m}</span>
+            ))}
+            <Form.Row>
+              <Form.Group as={Col} md="12" controlId="handle">
+                <Form.Control
+                  type="text"
+                  name="message"
+                  placeholder="Message"
+                  onChange={(e) => setSendingMsg(e.target.value)}
+                />
+              </Form.Group>
+            </Form.Row>
+            <Button
+              onClick={() => chatSocket.emit('newMessage', sendingMsg)}
+              type="submit"
+              style={{ marginRight: '10px' }}
+            >
+              Send
+            </Button>
           </div>
         </div>
         <div className="aside-50">
