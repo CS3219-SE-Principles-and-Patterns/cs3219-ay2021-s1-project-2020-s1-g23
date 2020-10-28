@@ -21,7 +21,6 @@ const HomePageUser = ({ user }) => {
     const userEmail = userObj.email;
 
     // MVP: Naive implementation of matching
-
     // If accidentally quit, return to session.
 
     let matchObj =
@@ -72,7 +71,7 @@ const HomePageUser = ({ user }) => {
               <h3 className="pt-3 pb-3">Your current rank is</h3>
               <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
               {/* TODO: Define constants to map ELO to rank */}
-              <h3 className="pt-3 pb-5">
+              <h3 className="pt-3 pb-5 margin-lr">
                 You are
                 <span className="text-strong"> xxxx </span>
                 points away from the next rank. Keep it up!

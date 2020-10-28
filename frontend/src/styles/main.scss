@@ -32,7 +32,6 @@ html, body, #root {
     100% { transform: rotate(360deg); }
 }
 
-
 .vert-center-md {
     padding-top: 150px;
     padding-bottom: 150px;
@@ -62,7 +61,9 @@ html, body, #root {
 
 .inner-flex-top {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    height: 100%;  
+    // justify-content: space-evenly;
 }
 
 .main-30 {
@@ -81,8 +82,23 @@ html, body, #root {
     flex: 0 0 40%;
 }
 
+.margin-lr {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 .fixed-bg-2 {
-    margin: 16px;
+    padding-top: 55px;
+    padding-bottom: 55px;
+
+    width: 90% !important;
+    min-width: 400px;
+    min-height: 650px;
+
+    background: #F7F7F7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    // margin: 16px;
   }
 
   .fixed-bg-3 {
