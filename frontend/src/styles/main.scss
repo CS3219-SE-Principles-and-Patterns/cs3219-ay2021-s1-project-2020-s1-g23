@@ -1,7 +1,6 @@
 // @import './variables';
 // To be implemented
 
-
 html * {
    font-family: Signika, sans-serif !important;
 }
@@ -12,35 +11,63 @@ html, body, #root {
   height: 100%;
 }
 
-.text-center {
-    text-align: center;
-}
-
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    margin: 0 auto;
-
-}
-  
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.vert-center-md {
+.pad-tb-150 {
     padding-top: 150px;
     padding-bottom: 150px;
 }
 
-.vert-center-sm {
+.pad-tb-75 {
     padding-top: 75px;
     padding-bottom: 75px;
 }
+
+.inner-flex-top {
+    display: flex;
+    justify-content: center;
+    height: 100%;  
+    // justify-content: space-evenly;
+}
+
+.flex-30 {
+    flex: 0 0 30%;
+}
+
+.flex-50 {
+    flex: 0 0 40%;
+}
+
+.margin-lr {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+// Utility: Containers
+
+.pp-box-deco {
+    background: #F7F7F7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+}
+
+.fixed-bg-home{
+  padding-top: 55px;
+  padding-bottom: 55px;
+
+  width: 90% !important;
+  min-width: 400px;
+  min-height: 650px;
+}
+
+.fixed-bg-history {
+  padding-top: 10px;
+  padding-bottom: 50px;
+  margin-top: 50px;
+  
+  width: 100% !important;
+  min-height: 230px;
+}
+
+// Utility: Text
 
 .text-white {
     color: white;
@@ -55,97 +82,31 @@ html, body, #root {
     font-size: 40px;
 }
 
-.textarea-minheight {
-    flex: 1;
-}
-
-.inner-flex-top {
-    display: flex;
-    justify-content: center;
-    height: 100%;  
-    // justify-content: space-evenly;
-}
-
-.main-30 {
-    flex: 0 0 30%;
-}
-
-.aside-30 {
-    flex: 0 0 30%;
-}
-
-.main-50 {
-    flex: 0 0 40%;
-}
-
-.aside-50 {
-    flex: 0 0 40%;
-}
-
-.margin-lr {
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
-.fixed-bg-2 {
-    padding-top: 55px;
-    padding-bottom: 55px;
-
-    width: 90% !important;
-    min-width: 400px;
-    min-height: 650px;
-
-    background: #F7F7F7;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-    // margin: 16px;
-  }
-
-  .fixed-bg-3 {
-    padding-top: 10px;
-    padding-bottom: 50px;
-    margin-top: 50px;
-    
-    width: 100% !important;
-    min-height: 230px;
-    
-    background: #F7F7F7;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-  }
-
-  .fixed-bg-question {
-    margin-bottom: 32px;
-  }
-
-  .fixed-bg-chat {
-    margin: 16px;
-  }
-
-.div-right {
-    display: flex; 
-    justify-content: flex-end
-}
-
-.div-right-adjust-5 {
-    padding-right: 5%;
-}
+// Buttons
 
 .pp-button {
     font-size:22px !important;
     width: 180px;
     height: 57px;
-
-    // text-transform: capitalize;
 }
 
 .pp-button-long {
     font-size:25px !important;
     width: 280px;
     height: 57px;
-
-    // text-transform: capitalize;
 }
+
+// Header
+
+.navbar-nav .nav-link {
+    color: red;
+}
+
+.nav-font-size {
+    font-size: 30px;
+}
+
+// Landing page
 
 .bg-light-blue {
     background-color: #0275d8 ;
@@ -155,6 +116,8 @@ html, body, #root {
     width: 370px;
     height: 370px;
 }
+
+// Home page
 
 .small-icon {
     width: 230px;
@@ -171,30 +134,16 @@ html, body, #root {
     height: 60px;
 }
 
-// Header
+// Login/Sign up
 
-.navbar-nav .nav-link {
-    color: red;
-}
-
-.nav-font-size {
-    font-size: 30px;
-}
-
-// Login
-
-.fixed-bg-1 {
+.fixed-bg-auth {
   padding-top: 100px;
   padding-bottom: 100px;
   margin-top: 50px;
 
   width: 80% !important;
   max-width: 1400px !important;
-  // height: auto;
   
-  background: #F7F7F7;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
 }
 
 .input-top {
@@ -215,6 +164,24 @@ html, body, #root {
 .error-message {
     padding-top: 10px;
     color: red;
+}
+
+// Load animation
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 // Chat
@@ -240,4 +207,11 @@ html, body, #root {
 .chat-text-field {
   display: flex;
   margin-top: 16px;
+}
+
+
+// Editor
+
+.textarea-minheight {
+    flex: 1;
 }
