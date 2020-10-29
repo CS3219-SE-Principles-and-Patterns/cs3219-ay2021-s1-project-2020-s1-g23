@@ -11,13 +11,13 @@ import Card from '@material-ui/core/Card';
 import { CardContent } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { generateKey, generateSessionId } from '../../utils';
+import { generateSessionId } from '../../utils';
 import EndSessionModal from './EndSessionModal';
 import { selectMatch } from '../../redux/slices/matchSlice';
 import { selectUser } from '../../redux/slices/userSlice';
 import Layout from '../../Templates/Layout';
 
-const chatSocket = io('https://api.peerprep.live/chat', { path: '/new' });
+const chatSocket = io('http://localhost:8080/chat', { path: '/new' });
 const useStyles = makeStyles({
   chatMessageContainer: {
     overflowY: 'auto',
@@ -60,14 +60,10 @@ function InterviewPage() {
     );
     chatSocket.on(sessionId, (message) => {
       setMessages((oldMessages) => [...oldMessages, message]);
-      document
-        .getElementById('chat-message-container')
-        .scrollTo(
-          0,
-          document.getElementById('chat-message-container').scrollHeight
-        );
+      const msgContainer = document.getElementById('chat-message-container');
+      msgContainer.scrollTo(0, msgContainer.scrollHeight);
     });
-  }, [sessionId]);
+  }, []);
   if (!user) {
     history.push('/notauthorised');
   }
@@ -128,14 +124,13 @@ function InterviewPage() {
                 style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
               >
                 <h3>Chat</h3>
-                {/* Chat UI */}
                 <div
                   className={classes.chatMessageContainer}
                   id="chat-message-container"
                 >
-                  {messages.map((m) => (
+                  {messages.map((m, i) => (
                     <div
-                      key={generateKey(m)}
+                      key={i}
                       className={
                         m.sender === user.nickname
                           ? 'chat-bubble-right'
