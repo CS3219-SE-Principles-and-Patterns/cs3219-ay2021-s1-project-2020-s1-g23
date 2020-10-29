@@ -10,6 +10,7 @@ class Match(Document):
     nickname = StringField()
     elo = IntField()
     search = IntField()
+    partner = StringField()
 
     meta = {
         "collection": "match",
