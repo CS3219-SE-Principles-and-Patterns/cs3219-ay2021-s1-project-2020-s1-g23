@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - 14
+script: cd frontend && yarn test --watchAll=false
 dist: trusty
 deploy:
   provider: script
