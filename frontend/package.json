@@ -26,7 +26,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "deploy": "aws s3 sync build/ s3://peerprep.live"
   },
   "eslintConfig": {
     "extends": "react-app"
