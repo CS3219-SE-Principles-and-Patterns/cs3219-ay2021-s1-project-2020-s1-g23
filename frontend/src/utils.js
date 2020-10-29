@@ -18,3 +18,7 @@ export const generateSessionId = (email1, email2) => {
   emailArray.sort();
   return sha256(emailArray);
 };
+
+export const generateKey = (pre) => {
+  return `${pre}_${new Date().getTime()}`;
+};
