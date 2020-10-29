@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - 14
+cache: yarn
 script: cd frontend && yarn && yarn test --watchAll=false
 dist: trusty
 deploy:
