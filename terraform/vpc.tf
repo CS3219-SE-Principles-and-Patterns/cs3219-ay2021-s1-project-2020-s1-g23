@@ -26,6 +26,7 @@ resource "aws_subnet" "main" {
   tags = map(
     "Name", "terraform-eks-main-node",
     "kubernetes.io/cluster/${var.cluster-name}", "shared",
+    "kubernetes.io/role/elb", "1"
   )
 }
 
