@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 const server = http.createServer(app);
-const io = require('socket.io')(server, {path: '/new'}).of('/chat');
+const io = require('socket.io')(server, {path: '/chat/new'}).of('/chat');
 
 app.get('/chat', (req, res) => res.status(200).json({message: 'ok', data: 'Chat microservice is working!'}));
 
