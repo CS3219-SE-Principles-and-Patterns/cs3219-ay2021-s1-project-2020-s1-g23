@@ -18,7 +18,7 @@ import {CardContent} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const chatSocket = io('https://api.peerprep.live/chat');
+const chatSocket = io('https://api.peerprep.live/chat/new');
 const useStyles = makeStyles({
   chatMessageContainer: {
     overflowY: 'auto',
