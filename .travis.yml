@@ -14,4 +14,5 @@ deploy:
   on:
     repo: CS3219-SE-Principles-and-Patterns/cs3219-ay2021-s1-project-2020-s1-g23
   skip_cleanup: 'true'
+  local_dir: frontend/build
   region: ap-southeast-1
