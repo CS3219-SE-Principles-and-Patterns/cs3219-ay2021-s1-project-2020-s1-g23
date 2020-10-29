@@ -17,7 +17,7 @@ import { selectMatch } from '../../redux/slices/matchSlice';
 import { selectUser } from '../../redux/slices/userSlice';
 import Layout from '../../Templates/Layout';
 
-const chatSocket = io('http://localhost:8080/chat', { path: '/new' });
+const chatSocket = io('https://api.peerprep.live/chat', { path: '/new' });
 const useStyles = makeStyles({
   chatMessageContainer: {
     overflowY: 'auto',
