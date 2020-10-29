@@ -63,7 +63,7 @@ function InterviewPage() {
       const msgContainer = document.getElementById('chat-message-container');
       msgContainer.scrollTo(0, msgContainer.scrollHeight);
     });
-  }, []);
+  }, [sessionId]);
   if (!user) {
     history.push('/notauthorised');
   }
