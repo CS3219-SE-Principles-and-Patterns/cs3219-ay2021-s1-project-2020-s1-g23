@@ -24,9 +24,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "prettier": "npx prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "deploy": "yarn build && aws s3 sync build/ s3://peerprep.live"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -62,6 +64,6 @@
     "eslint-plugin-react": "^7.21.3",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.0",
-    "prettier": "^2.1.2"
+    "prettier": "2.1.2"
   }
 }

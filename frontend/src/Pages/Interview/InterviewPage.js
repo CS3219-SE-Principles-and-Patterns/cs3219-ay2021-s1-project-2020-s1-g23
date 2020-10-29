@@ -3,22 +3,21 @@ import io from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Layout from '../../Templates/Layout';
 
-import { selectUser } from '../../redux/slices/userSlice';
-
+import Chip from '@material-ui/core/Chip';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import { CardContent } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { generateKey, generateSessionId } from '../../utils';
 import EndSessionModal from './EndSessionModal';
 import { selectMatch } from '../../redux/slices/matchSlice';
-import { generateSessionId } from '../../utils';
-import Chip from "@material-ui/core/Chip";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import {CardContent} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { selectUser } from '../../redux/slices/userSlice';
+import Layout from '../../Templates/Layout';
 
-const chatSocket = io('https://api.peerprep.live/chat');
+const chatSocket = io('https://api.peerprep.live/chat/new');
 const useStyles = makeStyles({
   chatMessageContainer: {
     overflowY: 'auto',
@@ -33,13 +32,13 @@ const useStyles = makeStyles({
   leftPanel: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
   },
   rightPanel: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 });
 
@@ -54,11 +53,19 @@ function InterviewPage() {
   const sessionId = generateSessionId(user.email, match.email);
   useEffect(() => {
     chatSocket.on('connect', () =>
-      setMessages((oldMessages) => [...oldMessages, {sender: 'System', msg: 'You are connected!'}])
+      setMessages((oldMessages) => [
+        ...oldMessages,
+        { sender: 'System', msg: 'You are connected!' },
+      ])
     );
     chatSocket.on(sessionId, (message) => {
       setMessages((oldMessages) => [...oldMessages, message]);
-      document.getElementById('chat-message-container').scrollTo(0, document.getElementById('chat-message-container').scrollHeight);
+      document
+        .getElementById('chat-message-container')
+        .scrollTo(
+          0,
+          document.getElementById('chat-message-container').scrollHeight
+        );
     });
   }, [sessionId]);
   if (!user) {
@@ -72,8 +79,8 @@ function InterviewPage() {
       chatSocket.emit('newMessage', {
         sessionId,
         payload: {
-          sender: user['nickname'],
-          msg: sendingMsg
+          sender: user.nickname,
+          msg: sendingMsg,
         },
       });
       setSendingMsg('');
@@ -82,43 +89,67 @@ function InterviewPage() {
 
   return (
     <Layout>
-      <Container style={{display: 'flex', height: 'calc(100vh - 77px)'}}>
+      <Container style={{ display: 'flex', height: 'calc(100vh - 77px)' }}>
         <div className={classes.interviewContent}>
           <div className={classes.leftPanel}>
-            <Card style={{display: 'flex', flex: 1}}>
-              <CardContent style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
+            <Card style={{ display: 'flex', flex: 1 }}>
+              <CardContent
+                style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+              >
                 <h3>Collaborative NotePad</h3>
-                <form style={{display: 'flex', flex: 1}}>
-                  <textarea className="form-control textarea-minheight" rows="20" />
+                <form style={{ display: 'flex', flex: 1 }}>
+                  <textarea
+                    className="form-control textarea-minheight"
+                    rows="20"
+                  />
                 </form>
               </CardContent>
             </Card>
           </div>
-          <div style={{width: 32}}/>
+          <div style={{ width: 32 }} />
           <div className={classes.rightPanel}>
             <Card>
               <CardContent>
                 <h3>Question</h3>
                 <p className="pt-3 text-left">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                  sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
                 </p>
               </CardContent>
             </Card>
-            <Card style={{display: 'flex', flex: 1, margin: '32px 0'}}>
-              <CardContent style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
+            <Card style={{ display: 'flex', flex: 1, margin: '32px 0' }}>
+              <CardContent
+                style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
+              >
                 <h3>Chat</h3>
                 {/* Chat UI */}
-                <div className={classes.chatMessageContainer} id="chat-message-container">
-                  {messages.map((m, i) => (
-                    <div key={m.sender + m.msg + i} className={m.sender === user['nickname'] ? "chat-bubble-right" : "chat-bubble-left"}>
-                      <Typography variant="caption" style={{textTransform: 'capitalize'}} color="textSecondary">{m.sender}</Typography>
-                      <Chip label={m.msg}/>
+                <div
+                  className={classes.chatMessageContainer}
+                  id="chat-message-container"
+                >
+                  {messages.map((m) => (
+                    <div
+                      key={generateKey(m)}
+                      className={
+                        m.sender === user.nickname
+                          ? 'chat-bubble-right'
+                          : 'chat-bubble-left'
+                      }
+                    >
+                      <Typography
+                        variant="caption"
+                        style={{ textTransform: 'capitalize' }}
+                        color="textSecondary"
+                      >
+                        {m.sender}
+                      </Typography>
+                      <Chip label={m.msg} />
                     </div>
                   ))}
                 </div>
@@ -130,7 +161,7 @@ function InterviewPage() {
                     name="message"
                     placeholder="Message"
                     onChange={(e) => setSendingMsg(e.target.value)}
-                    onKeyUp={e => e.key === 'Enter' ? handleSend() : null}
+                    onKeyUp={(e) => (e.key === 'Enter' ? handleSend() : null)}
                   />
                   <Button
                     onClick={handleSend}
@@ -142,11 +173,7 @@ function InterviewPage() {
                 </div>
               </CardContent>
             </Card>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleShow}
-            >
+            <Button variant="contained" color="secondary" onClick={handleShow}>
               End Session
             </Button>
           </div>
