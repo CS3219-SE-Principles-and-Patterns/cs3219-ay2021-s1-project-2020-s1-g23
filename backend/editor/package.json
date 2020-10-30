@@ -14,6 +14,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "http": "^0.0.1-security",
     "redis": "^3.0.2",
     "socket.io": "^2.3.0"
   },
