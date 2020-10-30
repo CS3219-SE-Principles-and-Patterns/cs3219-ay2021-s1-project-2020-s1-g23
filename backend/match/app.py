@@ -59,5 +59,14 @@ def update_match():
 
     return jsonify({'status': True, "message": "Successfully updated elo"}), 200
 
+@app.route('/match/user',methods=['GET'])
+def get_elo():
+    
+    email = request.args.get('email', default=None, type=str)
+
+    user = Match.objects(email=email).first()
+
+    return jsonify({'status': True,  "email": user.email, "nickname": user.nickname, "elo": user.elo, "search": user.search, "partner": user.partner}), 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
