@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "chat-deployment"
+  namespace: "ipp"
+  labels:
+    app: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat
+  template:
+    metadata:
+      labels:
+        app: chat
+    spec:
+      containers:
+        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:v1
+          imagePullPolicy: Always
+          name: chat
+          ports:
+            - containerPort: 5002
