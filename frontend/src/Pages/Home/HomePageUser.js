@@ -30,6 +30,8 @@ const HomePageUser = ({ user }) => {
         : JSON.parse(localStorage.getItem('match'));
     if (matchObj.email) {
       setShow(false);
+      console.log('Matched');
+      console.log(matchObj.email);
       history.push('/interview');
       return;
     }
@@ -44,6 +46,7 @@ const HomePageUser = ({ user }) => {
           ? ''
           : JSON.parse(localStorage.getItem('match')); // checks result after 6 seconds
       if (matchObj.email) {
+        console.log('Existing Match detected. Partner:');
         console.log(matchObj.email);
         setShow(false);
         history.push('/interview');

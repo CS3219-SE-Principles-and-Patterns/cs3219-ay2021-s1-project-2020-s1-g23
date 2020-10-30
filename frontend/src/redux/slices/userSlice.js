@@ -17,7 +17,6 @@ export const { setUser } = userSlice.actions;
 
 export const loginUser = (email, password) => (dispatch) => {
   const apiUrl = `${API_HOST}/user/login/${email}`;
-  // console.log(apiUrl);
   fetch(apiUrl, {
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +26,6 @@ export const loginUser = (email, password) => (dispatch) => {
   })
     .then((response) => response.json())
     .then((result) => {
-      // console.log(result);
       if (result.status === 'success') {
         saveState(USER_STATE_KEY, result.data);
         dispatch(setUser(result.data));
