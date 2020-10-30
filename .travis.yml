@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- 14
+cache: yarn
+script: cd frontend && yarn && yarn test --watchAll=false
+dist: trusty
+before_deploy: yarn build
+deploy:
+  provider: s3
+  access_key_id: AKIAWGFMP4P4ABNEIU7Z
+  secret_access_key:
+    secure: IqUnEH6R2MKCwboDzouBAVriNOARpihknDuV6DU4a4Q04xPkKmsNfPmNzX+phM87yK0B1XuwxDV200yeemK7TWP8VslruHh8f4YooEo9a0wOmp9nnF7LSnMHyCKR98/LWhSjpfnFld+g9oYNB0YflHdoxfkl2/Ny4XWw/GDYAH3HXDjqnf1mIemXAlbEZFr3sGEzt58HjAlWeVvGqO5k+iFvbe0AtNvOrhaaMB5MAvqZbeMu/THvom9JpND6cOpbEcHmkk3COa3SQdO4+F8DZiM9v6C0XhecD+KQ1xCS+MJLmMQxAZBkqOCd7zoaSFEGpmmnIZ0rz13HkHUhqee76CFt9JLBnme8q5KqecU4XEL4rYUBMe9hFHUgzyjfYaYbt35oVIOXqHN5y/HBz9ZaxqTYlmBAT+2ElA+lmCAMqIrP5gMMFxITZBR7yOhI3ERMtnyXx58CJgKuUrFPfYlJK/Q8FRWxF0mM3ID6Jn+JPSH3nB36oqFvAVTiiBCkx42INKJfJZxsBgR9+uYhQjJLOjktg/syT4g70qjvNl9vBr6mYxvrCbMnLeg5WO+AkvrjpzuY84h7w2FFh0YVDSw6RHySgXy/VIVL7D9pCxHKzV6r7Za/B9kETQDqpOI9hhhVhTFms2pxDqvJhvuqGRCqp8jPrslaNUdbuqbHxAnPBNo=
+  bucket: peerprep.live
+  acl: bucket_owner_full_control
+  on:
+    repo: CS3219-SE-Principles-and-Patterns/cs3219-ay2021-s1-project-2020-s1-g23
+  skip_cleanup: 'true'
+  local_dir: build
+  region: ap-southeast-1

@@ -21,7 +21,6 @@ const HomePageUser = ({ user }) => {
     const userEmail = userObj.email;
 
     // MVP: Naive implementation of matching
-
     // If accidentally quit, return to session.
 
     let matchObj =
@@ -58,21 +57,21 @@ const HomePageUser = ({ user }) => {
 
   return (
     <div>
-      <div className="container-fluid text-center vert-center-sm">
+      <div className="container-fluid text-center pad-tb-75">
         <h1 className="display-4">Welcome, {user.nickname}</h1>
         <h3 className="pt-3 font-italic">
           We hope you will have a fulfilling experience with PeerPrep today!
         </h3>
 
-        <div className="inner-flex-top vert-center-sm">
-          <div className="main-50">
-            <div className="container fixed-bg-2 text-center">
+        <div className="inner-flex-top pad-tb-75">
+          <div className="flex-50">
+            <div className="container fixed-bg-home pp-box-deco text-center">
               <h1 className="display-4 pb-5">ELO: xxxx</h1>{' '}
               {/* TODO: Get real ELO here */}
               <h3 className="pt-3 pb-3">Your current rank is</h3>
               <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
               {/* TODO: Define constants to map ELO to rank */}
-              <h3 className="pt-3 pb-5">
+              <h3 className="pt-3 pb-5 margin-lr">
                 You are
                 <span className="text-strong"> xxxx </span>
                 points away from the next rank. Keep it up!
@@ -88,8 +87,8 @@ const HomePageUser = ({ user }) => {
               </a>
             </div>
           </div>
-          <div className="aside-50">
-            <div className="container fixed-bg-2 text-center">
+          <div className="flex-50">
+            <div className="container fixed-bg-home pp-box-deco text-center">
               {/* <h1 className="display-4 pb-5">PeerPrep</h1> */}
               <img className="small-icon" src="/education.png" alt="Start" />
               <h3 className="pt-3">Choose your difficulty:</h3>

@@ -27,7 +27,7 @@ function HistoryPage() {
           <h3 className="pt-3 font-italic">View your past PeerPreps here!</h3>
         </div>
 
-        <div className="container fixed-bg-3 vert-center-sm">
+        <div className="container fixed-bg-history pp-box-deco pad-tb-75">
           {/* Insert History */}
           <h5 className="pt-5 pb-5 text-center">
             It is so empty over here... Start PeerPrepping!
