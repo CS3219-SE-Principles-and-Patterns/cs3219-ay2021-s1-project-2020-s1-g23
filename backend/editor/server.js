@@ -9,11 +9,10 @@ app.use(express.static(__dirname));
 const redis = require("redis");
 const redisHostname = process.env.REDIS_HOST || "localhost";
 const redisPort = process.env.REDIS_PORT || 6379;
+const redisSecret = process.env.REDIS_SECRET || "password";
 
 const client = redis.createClient(redisPort, redisHostname, { no_ready_check: true });
-client.auth("password", function (err) {
-  console.error(err);
-});
+client.auth(redisSecret);
 
 client.on("error", function (err) {
   console.log("Error " + err);
