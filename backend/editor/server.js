@@ -1,8 +1,8 @@
 const express = require("express");
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 3123;
+const cors = require("cors");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,23 +15,14 @@ const redisSecret = process.env.REDIS_SECRET || "password";
 
 const client = redis.createClient(redisPort, redisHostname, { no_ready_check: true });
 client.auth(redisSecret);
+client.on("error", err => console.log("Error " + err));
+client.on("connect", () => console.log("Connected to Redis"));
 
-client.on("error", function (err) {
-  console.log("Error " + err);
-});
-
-client.on("connect", function () {
-  console.log("Connected to Redis");
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.get("/", (req, res) => res.send("Hello World!"));
 
 // Socket.io
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
-
 io.on("connection", () => {
   console.log("a user is connected");
 });
