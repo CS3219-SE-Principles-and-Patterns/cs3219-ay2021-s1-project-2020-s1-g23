@@ -1,4 +1,5 @@
-let User = require("../models/user-model");
+const User = require("../models/user-model");
+const Profile = require("../models/profile-model");
 const fetch = require("node-fetch");
 // Handle index actions
 exports.index = function (req, res) {
@@ -19,10 +20,12 @@ exports.index = function (req, res) {
 };
 // Handle create user actions
 exports.new = function (req, res) {
-  let user = new User();
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.nickname = req.body.nickname;
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+    nickname: req.body.nickname,
+  });
+  const profile = new Profile({ user_id: user._id });
   // save the user and check for errors
   user.save(function (err) {
     if (err) {
@@ -31,7 +34,22 @@ exports.new = function (req, res) {
         message: err,
       });
     } else {
-      // Create match elo
+      // Save profile
+      profile.save(function (err) {
+        if (err) {
+          res.status(500).json({
+            status: "error",
+            message: err,
+          });
+        } else {
+          res.status(200).json({
+            status: "success",
+            message: "New user created!",
+            data: user,
+          });
+        }
+      });
+      /* Create match elo
       const MATCH_URL =
         "http://match-service.ipp.svc.cluster.local:5000/match/create";
       fetch(`${MATCH_URL}?email=${user.email}&nickname=${user.nickname}`, {
@@ -55,7 +73,7 @@ exports.new = function (req, res) {
               data: result.message,
             });
           }
-        });
+        });*/
     }
   });
 };
