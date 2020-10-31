@@ -24,7 +24,8 @@ const HomePageUser = ({ user }) => {
     getElo(userEmail).then((data) => {
       console.log(data);
       setElo(data.elo);
-      const userRank = RATING_MAP[Math.floor((data.elo - 1000) / 10)];
+      const userRank =
+        RATING_MAP[Math.min(5, Math.floor((data.elo - 1000) / 10))];
       setRank(userRank);
     });
   });
