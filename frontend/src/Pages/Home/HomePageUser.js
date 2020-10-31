@@ -4,12 +4,15 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
 
+import { RATING_MAP } from '../../consts';
+
 import { getMatch, getElo } from '../../redux/slices/matchSlice';
 
 const HomePageUser = ({ user }) => {
   const [difficulty, setDifficulty] = useState('');
   const [show, setShow] = useState(false);
   const [elo, setElo] = useState(0);
+  const [rank, setRank] = useState('Rankless');
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -21,6 +24,8 @@ const HomePageUser = ({ user }) => {
     getElo(userEmail).then((data) => {
       console.log(data);
       setElo(data.elo);
+      const userRank = RATING_MAP[Math.floor((data.elo - 1000) / 10)];
+      setRank(userRank);
     });
   });
 
@@ -83,7 +88,7 @@ const HomePageUser = ({ user }) => {
               <h1 className="display-4 pb-5">ELO: {elo}</h1>{' '}
               {/* TODO: Get real ELO here */}
               <h3 className="pt-3 pb-3">Your current rank is</h3>
-              <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
+              <h1 className="display-5 text-blue">{rank}</h1>{' '}
               {/* TODO: Define constants to map ELO to rank */}
               <h3 className="pt-3 pb-5 margin-lr">
                 You are
