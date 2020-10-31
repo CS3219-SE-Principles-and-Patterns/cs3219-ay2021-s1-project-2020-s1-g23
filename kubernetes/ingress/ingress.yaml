@@ -14,6 +14,9 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: 	arn:aws:acm:ap-southeast-1:425563513848:certificate/4baf2a94-36ba-4785-9490-037c8065ba62
     # SSL Redirect Setting
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+    alb.ingress.kubernetes.io/target-type: ip
 spec:
   rules:
     - http:
@@ -22,12 +25,16 @@ spec:
             backend:
               serviceName: ssl-redirect
               servicePort: use-annotation
-          - path: /user/*
-            backend:
-              serviceName: user-service
-              servicePort: 5001
           - path: /match/*
             backend:
               serviceName: match-service
               servicePort: 5000
+          - path: /user/*
+            backend:
+              serviceName: user-service
+              servicePort: 5001
+          - path: /chat/*
+            backend:
+              serviceName: chat-service
+              servicePort: 5002
 
