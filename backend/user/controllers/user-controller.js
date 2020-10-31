@@ -35,6 +35,14 @@ exports.new = function (req, res) {
         message: 'New user created!',
         data: user
       });
+      // Create match elo
+      const MATCH_URL = 'http://match-service.ipp.svc.cluster.local:5000/match/create';
+      fetch(`${MATCH_URL}?email=${user.email}&nickname=${user.nickname}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST'
+      });
     }
   });
 };
