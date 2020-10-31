@@ -1,4 +1,5 @@
 let User = require('../models/user-model');
+const fetch = require('node-fetch');
 // Handle index actions
 exports.index = function (req, res) {
   User.get(function (err, users) {
