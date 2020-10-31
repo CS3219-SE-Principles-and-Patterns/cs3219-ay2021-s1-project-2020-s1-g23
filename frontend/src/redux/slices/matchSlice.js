@@ -68,6 +68,18 @@ export const updateElo = (email, elo) => () => {
     .catch((err) => console.log(err));
 };
 
+export async function getElo(email) {
+  const apiUrl = `${API_HOST}/match/user?email=${email}`;
+
+  const response = await fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}
+
 export const endMatch = () => (dispatch) => {
   removeState(MATCH_STATE_KEY);
   dispatch(setMatch(null));

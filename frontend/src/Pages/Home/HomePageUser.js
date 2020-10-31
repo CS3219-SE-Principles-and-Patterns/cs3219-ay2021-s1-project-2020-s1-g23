@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
 
-import { getMatch } from '../../redux/slices/matchSlice';
+import { getMatch, getElo } from '../../redux/slices/matchSlice';
 
 const HomePageUser = ({ user }) => {
   const [difficulty, setDifficulty] = useState('');
   const [show, setShow] = useState(false);
+  const [elo, setElo] = useState(0);
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    const userObj = JSON.parse(localStorage.getItem('user'));
+    const userEmail = userObj.email;
+
+    getElo(userEmail).then((data) => {
+      console.log(data);
+      setElo(data.elo);
+    });
+  });
 
   const handleShow = (value) => {
     setShow(true);
@@ -69,7 +80,7 @@ const HomePageUser = ({ user }) => {
         <div className="inner-flex-top pad-tb-75">
           <div className="flex-50">
             <div className="container fixed-bg-home pp-box-deco text-center">
-              <h1 className="display-4 pb-5">ELO: xxxx</h1>{' '}
+              <h1 className="display-4 pb-5">ELO: {elo}</h1>{' '}
               {/* TODO: Get real ELO here */}
               <h3 className="pt-3 pb-3">Your current rank is</h3>
               <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
