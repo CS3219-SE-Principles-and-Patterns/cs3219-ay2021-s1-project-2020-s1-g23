@@ -21,7 +21,7 @@ const EndSessionModal = ({ handleClose, show }) => {
     // *** Api call here to give rating
 
     getElo(peerEmail).then((peerData) => {
-      const updatedValue = peerData.elo + value;
+      const updatedValue = peerData.elo + parseInt(value, 10);
       dispatch(updateElo(peerEmail, updatedValue));
     });
 
