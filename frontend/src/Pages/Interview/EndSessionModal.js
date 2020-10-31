@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { endMatch, updateElo } from '../../redux/slices/matchSlice'; // updateElo
+import { endMatch, updateElo, getElo } from '../../redux/slices/matchSlice';
 
 // Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
@@ -13,17 +13,22 @@ const EndSessionModal = ({ handleClose, show }) => {
   const dispatch = useDispatch();
 
   const handleClick = (value) => {
+    // value is rating assigned
+
     const peerEmail = JSON.parse(localStorage.getItem('match')).email;
     const userEmail = JSON.parse(localStorage.getItem('user')).email;
 
-    // value is rating assigned
-    console.log(value);
-    console.log(localStorage.getItem('match'));
-
     // *** Api call here to give rating
 
-    dispatch(updateElo(peerEmail, 1069));
-    dispatch(updateElo(userEmail, 1069));
+    getElo(peerEmail).then((peerData) => {
+      const updatedValue = peerData.elo + value;
+      dispatch(updateElo(peerEmail, updatedValue));
+    });
+
+    getElo(userEmail).then((userData) => {
+      const updatedValue = userData.elo + 10;
+      dispatch(updateElo(userEmail, updatedValue));
+    });
 
     dispatch(endMatch());
     history.push('/');
