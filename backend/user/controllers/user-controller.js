@@ -42,38 +42,33 @@ exports.new = function (req, res) {
             message: err,
           });
         } else {
-          res.status(200).json({
-            status: "success",
-            message: "New user created!",
-            data: user,
-          });
+          // create match elo
+          const MATCH_URL =
+            "http://match-service.ipp.svc.cluster.local:5000/match/create";
+          fetch(`${MATCH_URL}?email=${user.email}&nickname=${user.nickname}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.status) {
+                res.status(200).json({
+                  status: "success",
+                  message: "New user created!",
+                  data: user,
+                });
+              } else {
+                res.status(500).json({
+                  status: "error",
+                  message: "Error initialising match elo, please try again",
+                  data: result.message,
+                });
+              }
+            });
         }
       });
-      /* Create match elo
-      const MATCH_URL =
-        "http://match-service.ipp.svc.cluster.local:5000/match/create";
-      fetch(`${MATCH_URL}?email=${user.email}&nickname=${user.nickname}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.status) {
-            res.status(200).json({
-              status: "success",
-              message: "New user created!",
-              data: user,
-            });
-          } else {
-            res.status(500).json({
-              status: "error",
-              message: "Error initialising match elo, please try again",
-              data: result.message,
-            });
-          }
-        });*/
     }
   });
 };
