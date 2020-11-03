@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
 
-import { getMatch } from '../../redux/slices/matchSlice';
+import { RATING_MAP } from '../../consts';
+
+import { getMatch, getElo } from '../../redux/slices/matchSlice';
 
 const HomePageUser = ({ user }) => {
   const [difficulty, setDifficulty] = useState('');
   const [show, setShow] = useState(false);
+  const [elo, setElo] = useState(0);
+  const [rank, setRank] = useState('Rankless');
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    const userObj = JSON.parse(localStorage.getItem('user'));
+    const userEmail = userObj.email;
+
+    getElo(userEmail).then((data) => {
+      console.log(data);
+      setElo(data.elo);
+      const userRank =
+        RATING_MAP[Math.min(5, Math.floor((data.elo - 1000) / 10))];
+      setRank(userRank);
+    });
+  });
 
   const handleShow = (value) => {
     setShow(true);
@@ -30,6 +47,8 @@ const HomePageUser = ({ user }) => {
         : JSON.parse(localStorage.getItem('match'));
     if (matchObj.email) {
       setShow(false);
+      console.log('Matched');
+      console.log(matchObj.email);
       history.push('/interview');
       return;
     }
@@ -44,6 +63,7 @@ const HomePageUser = ({ user }) => {
           ? ''
           : JSON.parse(localStorage.getItem('match')); // checks result after 6 seconds
       if (matchObj.email) {
+        console.log('Existing Match detected. Partner:');
         console.log(matchObj.email);
         setShow(false);
         history.push('/interview');
@@ -66,10 +86,10 @@ const HomePageUser = ({ user }) => {
         <div className="inner-flex-top pad-tb-75">
           <div className="flex-50">
             <div className="container fixed-bg-home pp-box-deco text-center">
-              <h1 className="display-4 pb-5">ELO: xxxx</h1>{' '}
+              <h1 className="display-4 pb-5">ELO: {elo}</h1>{' '}
               {/* TODO: Get real ELO here */}
               <h3 className="pt-3 pb-3">Your current rank is</h3>
-              <h1 className="display-5 text-blue"> Aspiring Newbie</h1>{' '}
+              <h1 className="display-5 text-blue">{rank}</h1>{' '}
               {/* TODO: Define constants to map ELO to rank */}
               <h3 className="pt-3 pb-5 margin-lr">
                 You are
