@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - 14
 cache: yarn
-script: cd frontend && yarn && yarn test --watchAll=false
+script: cd frontend && yarn && yarn test --watchAll=false && yarn prettier --check .
 dist: trusty
 before_deploy: yarn build
 deploy:
