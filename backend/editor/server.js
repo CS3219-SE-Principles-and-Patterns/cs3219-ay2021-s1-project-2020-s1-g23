@@ -8,9 +8,9 @@ app.use(express.urlencoded({ extended: false }));
 
 const http = require("http");
 const server = http.createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, { path: "/editor/new" }).of("/editor");
 
-app.get("/", (req, res) =>
+app.get("/editor/ping", (req, res) =>
   res.status(200).json({ message: "ok", data: "Editor microservice is working" })
 );
 
