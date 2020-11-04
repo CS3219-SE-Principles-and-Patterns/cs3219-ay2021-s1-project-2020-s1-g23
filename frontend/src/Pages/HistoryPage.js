@@ -22,7 +22,7 @@ function HistoryPage() {
         .then((response) => response.json())
         .then((result) => setInterviews(result.data.interviews));
     }
-  }, []);
+  }, [user]);
   if (!user) {
     history.push('/notauthorised');
   }
