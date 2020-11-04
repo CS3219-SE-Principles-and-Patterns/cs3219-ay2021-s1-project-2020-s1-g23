@@ -15,15 +15,13 @@ export const matchSlice = createSlice({
 
 export const { setMatch } = matchSlice.actions;
 
-export const getMatch = (email, counter) => (dispatch) => {
+export const getMatch = (id, email, counter) => (dispatch) => {
   if (counter === 0) {
-    console.log('exit');
     return;
   }
   const nextCounter = counter - 1;
 
   const apiUrl = `${API_HOST}/match/get?email=${email}`;
-  // console.log(apiUrl);
   fetch(apiUrl, {
     headers: {
       'Content-Type': 'application/json',
@@ -32,14 +30,33 @@ export const getMatch = (email, counter) => (dispatch) => {
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
       if (result.status === true) {
-        saveState(MATCH_STATE_KEY, result);
-        dispatch(setMatch(result));
+        fetch(`${API_HOST}/user/profile/interview/${id}`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({ partner_nickname: result.nickname }),
+        })
+          .then((iresponse) => iresponse.json())
+          .then((iresult) => {
+            if (iresult.status === 'success') {
+              const finalResult = {
+                interview_id: iresult['data']['_id'],
+                ...result,
+              };
+              saveState(MATCH_STATE_KEY, finalResult);
+              dispatch(setMatch(finalResult));
+            } else {
+              alert(
+                'Starting your interview session failed! Please try again!'
+              );
+            }
+          });
       } else if (result.status === false) {
         // recurse with timeout until succeed
         setTimeout(() => {
-          dispatch(getMatch(email, nextCounter));
+          dispatch(getMatch(id, email, nextCounter));
         }, 5000);
       } else {
         throw new Error(result.message);
@@ -50,7 +67,6 @@ export const getMatch = (email, counter) => (dispatch) => {
 
 export const updateElo = (email, elo) => () => {
   const apiUrl = `${API_HOST}/match/update?email=${email}&elo=${elo}`;
-  console.log(apiUrl);
   fetch(apiUrl, {
     // credentials: 'include',
     headers: {
@@ -60,9 +76,8 @@ export const updateElo = (email, elo) => () => {
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
       if (result.status === true) {
-        console.log('Success');
+        console.log('Elo Update Success');
       }
     })
     .catch((err) => console.log(err));
