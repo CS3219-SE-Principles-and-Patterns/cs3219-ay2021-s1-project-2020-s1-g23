@@ -37,4 +37,8 @@ spec:
             backend:
               serviceName: chat-service
               servicePort: 5002
+          - path: /editor/*
+            backend:
+              serviceName: editor-service
+              servicePort: 4001
 

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "match-deployment"
+  namespace: "ipp"
+  labels:
+    app: match
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: match
+  template:
+    metadata:
+      labels:
+        app: match
+    spec:
+      containers:
+        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/match:v1
+          imagePullPolicy: Always
+          name: match
+          ports:
+            - containerPort: 5000
