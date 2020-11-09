@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "match-deployment"
+  name: "editor-deployment"
   namespace: "ipp"
   labels:
-    app: match
+    app: editor
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: match
+      app: editor
   template:
     metadata:
       labels:
-        app: match
+        app: editor
     spec:
       containers:
-        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/match:v1
+        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/editor:v1
           imagePullPolicy: Always
-          name: match
+          name: editor
           ports:
-            - containerPort: 5000
+            - containerPort: 4001

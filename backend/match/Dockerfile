@@ -4,7 +4,11 @@ WORKDIR /app
 
 ADD . /app
 
-COPY .env ./.env
+# COPY .env ./.env
+
+ARG DB_URL
+
+ENV DB_URL=${DB_URL}
 
 RUN pip install -r requirements.txt
 
