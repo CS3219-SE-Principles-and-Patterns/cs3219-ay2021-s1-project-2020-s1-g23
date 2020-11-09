@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
 
 import { RATING_MAP } from '../../consts';
@@ -22,7 +22,6 @@ const HomePageUser = ({ user }) => {
     const userEmail = userObj.email;
 
     getElo(userEmail).then((data) => {
-      console.log(data);
       setElo(data.elo);
       const userRank =
         RATING_MAP[Math.min(5, Math.floor((data.elo - 1000) / 10))];
@@ -47,14 +46,12 @@ const HomePageUser = ({ user }) => {
         : JSON.parse(localStorage.getItem('match'));
     if (matchObj.email) {
       setShow(false);
-      console.log('Matched');
-      console.log(matchObj.email);
       history.push('/interview');
       return;
     }
 
     const counter = 2;
-    dispatch(getMatch(userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
+    dispatch(getMatch(userObj._id, userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
 
     setTimeout(() => {
       matchObj =
@@ -63,8 +60,6 @@ const HomePageUser = ({ user }) => {
           ? ''
           : JSON.parse(localStorage.getItem('match')); // checks result after 6 seconds
       if (matchObj.email) {
-        console.log('Existing Match detected. Partner:');
-        console.log(matchObj.email);
         setShow(false);
         history.push('/interview');
       } else {
@@ -96,7 +91,7 @@ const HomePageUser = ({ user }) => {
                 <span className="text-strong"> xxxx </span>
                 points away from the next rank. Keep it up!
               </h3>
-              <a href="/history">
+              <Link to="/history">
                 <Button
                   variant="primary"
                   size="lg"
@@ -104,7 +99,7 @@ const HomePageUser = ({ user }) => {
                 >
                   View History
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex-50">

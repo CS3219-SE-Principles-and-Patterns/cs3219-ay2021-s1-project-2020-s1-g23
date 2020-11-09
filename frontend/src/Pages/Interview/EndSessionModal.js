@@ -2,13 +2,22 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { endMatch, updateElo, getElo } from '../../redux/slices/matchSlice';
+import {
+  endMatch,
+  updateElo,
+  getElo,
+  selectMatch,
+} from '../../redux/slices/matchSlice';
+import { API_HOST } from '../../consts';
+import { selectUser } from '../../redux/slices/userSlice';
 
 // Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 const EndSessionModal = ({ handleClose, show }) => {
+  const user = useSelector(selectUser);
+  const match = useSelector(selectMatch);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -30,8 +39,22 @@ const EndSessionModal = ({ handleClose, show }) => {
       dispatch(updateElo(userEmail, updatedValue));
     });
 
-    dispatch(endMatch());
-    history.push('/');
+    fetch(`${API_HOST}/user/profile/interview/${user._id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+      body: JSON.stringify({ interview_id: match.interview_id }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 'success') {
+          history.push('/');
+          dispatch(endMatch());
+        } else {
+          alert('Failed to end session. Please try again!');
+        }
+      });
   };
   return (
     <Modal show={show} onHide={handleClose}>
