@@ -18,6 +18,11 @@ import { selectUser } from '../../redux/slices/userSlice';
 import Layout from '../../Templates/Layout';
 
 const chatSocket = io('https://api.peerprep.live/chat', { path: '/chat/new' });
+const editorSocket = io('https://api.peerprep.live/editor', {
+  path: '/editor/new',
+});
+// const editorSocket = io('localhost:4001/editor', { path: '/editor/new' });
+
 const useStyles = makeStyles({
   chatMessageContainer: {
     overflowY: 'auto',
@@ -49,6 +54,8 @@ function InterviewPage() {
   const [show, setShow] = useState(false);
   const [sendingMsg, setSendingMsg] = useState('');
   const [messages, setMessages] = useState([]);
+  const [code, setCode] = useState();
+  const [question, setQuestion] = useState({});
   const classes = useStyles();
   const sessionId = generateSessionId(user.email, match.email);
   useEffect(() => {
@@ -62,6 +69,13 @@ function InterviewPage() {
       setMessages((oldMessages) => [...oldMessages, message]);
       const msgContainer = document.getElementById('chat-message-container');
       msgContainer.scrollTo(0, msgContainer.scrollHeight);
+    });
+    editorSocket.on('Question', (qn, input, output) => {
+      setQuestion({ qn, input, output });
+    });
+    editorSocket.on(sessionId, (data) => {
+      console.log(`Receiving: ${data}`);
+      setCode(data);
     });
   }, [sessionId]);
   if (!user) {
@@ -83,6 +97,14 @@ function InterviewPage() {
     }
   };
 
+  // Editor
+  const handleTextChange = (event) => {
+    editorSocket.emit('newMessage', {
+      sessionId,
+      payload: event.target.value,
+    });
+  };
+
   return (
     <Layout>
       <Container style={{ display: 'flex', height: 'calc(100vh - 77px)' }}>
@@ -97,6 +119,8 @@ function InterviewPage() {
                   <textarea
                     className="form-control textarea-minheight"
                     rows="20"
+                    value={code}
+                    onChange={handleTextChange}
                   />
                 </form>
               </CardContent>
@@ -107,16 +131,9 @@ function InterviewPage() {
             <Card>
               <CardContent>
                 <h3>Question</h3>
-                <p className="pt-3 text-left">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
+                <p className="pt-3 text-left">{question.qn}</p>
+                <p className="pt-3 text-left">{question.input}</p>
+                <p className="pt-3 text-left">{question.output}</p>
               </CardContent>
             </Card>
             <Card style={{ display: 'flex', flex: 1, margin: '32px 0' }}>
@@ -128,9 +145,10 @@ function InterviewPage() {
                   className={classes.chatMessageContainer}
                   id="chat-message-container"
                 >
-                  {messages.map((m, i) => (
+                  {messages.map((m) => (
                     <div
-                      key={i}
+                      // used to be key={i} but eslint rekt me
+                      key={m.sender + m.msg}
                       className={
                         m.sender === user.nickname
                           ? 'chat-bubble-right'
