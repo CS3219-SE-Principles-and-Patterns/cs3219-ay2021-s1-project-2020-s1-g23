@@ -6,7 +6,7 @@ import DifficultyModal from './DifficultyModal';
 
 import { RATING_MAP } from '../../consts';
 
-import { getMatch, getElo } from '../../redux/slices/matchSlice';
+import {getMatch, getElo, updateElo} from '../../redux/slices/matchSlice';
 
 const HomePageUser = ({ user }) => {
   const [difficulty, setDifficulty] = useState('');
@@ -64,6 +64,8 @@ const HomePageUser = ({ user }) => {
         history.push('/interview');
       } else {
         setShow(false);
+        alert("No match found! Please try again later!");
+        dispatch(updateElo(userEmail, elo))
       }
     }, 6000);
   };
