@@ -33,6 +33,7 @@ const useStyles = makeStyles({
     minHeight: 0,
   },
   interviewContent: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'row',
     padding: '64px 0',
@@ -59,6 +60,7 @@ function InterviewPage() {
   const [messages, setMessages] = useState([]);
   const [code, setCode] = useState();
   const [question, setQuestion] = useState({});
+  const [buddyEndedMsg, setBuddyEndedMsg] = useState(null);
   const classes = useStyles();
   const sessionId = generateSessionId(user.email, match.email);
   useEffect(() => {
@@ -69,9 +71,17 @@ function InterviewPage() {
       ])
     );
     chatSocket.on(sessionId, (message) => {
-      setMessages((oldMessages) => [...oldMessages, message]);
-      const msgContainer = document.getElementById('chat-message-container');
-      msgContainer.scrollTo(0, msgContainer.scrollHeight);
+      if (message.msg === '/end_session') {
+        if (message.sender !== user.nickname) {
+          console.log(message, user.nickname);
+          setBuddyEndedMsg('Your buddy has ended the session!');
+        }
+        setShow(true);
+      } else {
+        setMessages((oldMessages) => [...oldMessages, message]);
+        const msgContainer = document.getElementById('chat-message-container');
+        msgContainer.scrollTo(0, msgContainer.scrollHeight);
+      }
     });
     editorSocket.on('Question', (qn, input, output) => {
       setQuestion({ qn, input, output });
@@ -80,12 +90,21 @@ function InterviewPage() {
       console.log(`Receiving: ${data}`);
       setCode(data);
     });
-  }, [sessionId]);
+  }, [sessionId, question]);
   if (!user) {
     history.push('/notauthorised');
   }
 
-  const handleShow = () => setShow(true);
+  const handleEndSession = () => {
+    chatSocket.emit('newMessage', {
+      sessionId,
+      payload: {
+        sender: user.nickname,
+        msg: '/end_session',
+      },
+    });
+    setShow(true);
+  };
   const handleClose = () => setShow(false);
   const handleSend = () => {
     if (sendingMsg !== '') {
@@ -192,12 +211,20 @@ function InterviewPage() {
                 </div>
               </CardContent>
             </Card>
-            <Button variant="contained" color="secondary" onClick={handleShow}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleEndSession}
+            >
               End Session
             </Button>
           </div>
         </div>
-        <EndSessionModal handleClose={handleClose} show={show} />{' '}
+        <EndSessionModal
+          handleClose={handleClose}
+          show={show}
+          buddyEndedMsg={buddyEndedMsg}
+        />{' '}
       </Container>
     </Layout>
   );

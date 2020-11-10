@@ -15,7 +15,7 @@ import { selectUser } from '../../redux/slices/userSlice';
 
 // Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
-const EndSessionModal = ({ handleClose, show }) => {
+const EndSessionModal = ({ handleClose, show, buddyEndedMsg }) => {
   const user = useSelector(selectUser);
   const match = useSelector(selectMatch);
   const history = useHistory();
@@ -57,11 +57,12 @@ const EndSessionModal = ({ handleClose, show }) => {
       });
   };
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>Rate your buddy!</Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center">
+        <h5 className="mt-4 mb-4">{buddyEndedMsg}</h5>
         <input
           type="image"
           className="xs-icon mt-4"
@@ -98,14 +99,9 @@ const EndSessionModal = ({ handleClose, show }) => {
           onClick={(e) => handleClick(e.target.alt)}
         />
         <h5 className="mt-4 mb-4">
-          Note that rating your peer will automatically end the session.
+          Thanks for Peerprepping! Please rate your peer.
         </h5>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };
