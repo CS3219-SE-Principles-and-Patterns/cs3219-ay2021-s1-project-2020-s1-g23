@@ -89,9 +89,7 @@ const HomePageUser = ({ user }) => {
               <h1 className="display-5 text-blue">{rank}</h1>{' '}
               {/* TODO: Define constants to map ELO to rank */}
               <h3 className="pt-3 pb-5 margin-lr">
-                You are
-                <span className="text-strong"> xxxx </span>
-                points away from the next rank. Keep it up!
+                You are doing well! Keep up the prep!
               </h3>
               <Link to="/history">
                 <Button
