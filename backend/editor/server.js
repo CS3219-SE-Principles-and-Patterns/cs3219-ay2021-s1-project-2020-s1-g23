@@ -11,14 +11,49 @@ const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server, { path: "/editor/new" }).of("/editor");
 
-app.get("/editor/ping", (req, res) =>
-  res.status(200).json({ message: "ok", data: "Editor microservice is working" })
-);
+const redis = require("redis");
+// const client = redis.createClient();
+const client = redis.createClient({
+  host: "https://redis-cluster.ppg54m.0001.apse1.cache.amazonaws.com",
+  port: 6379
+});
+client.on("connect", () => console.log("Connected to Redis"));
+client.on("error", function (error) {
+  console.error(error);
+});
 
-const getQuestion = require("./question-generator");
+app.get("/editor/ping", (req, res) => {
+  res.status(200).json({ message: "pong", data: "Editor microservice is working" });
+});
+
+const { genQuestion, retrieveQuestion } = require("./question-generator");
+app.get("/editor/question", (req, res) => {
+  const { sessionId, difficulty } = req.query;
+  console.log(req.query);
+  if (!sessionId) {
+    res.status(400).json("No parameters");
+  }
+  client.get(sessionId, (err, redisRes) => {
+    if (redisRes === null) {
+      const obj = genQuestion(difficulty);
+      client.set(sessionId, obj.key, redis.print);
+      res.status(200).json(obj.questionObj);
+    } else {
+      const qn = retrieveQuestion(redisRes, difficulty);
+      res.status(200).json(qn);
+    }
+  });
+});
+
+app.get("/editor/end-session", (req, res) => {
+  const sessionId = req.query.sessionId;
+  client.del(sessionId, (err, redisRes) => {
+    console.log("Deleted ", sessionId);
+    res.status(200).json("Deleted session");
+  });
+});
+
 io.on("connection", socket => {
-  const qn = getQuestion();
-  socket.emit("Question", qn.question, qn.input, qn.output);
   socket.on("newMessage", msg => {
     io.emit(msg.sessionId, msg.payload);
   });
