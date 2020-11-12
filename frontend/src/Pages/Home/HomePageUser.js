@@ -1,15 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import DifficultyModal from './DifficultyModal';
 
 import { RATING_MAP } from '../../consts';
 
-import {getMatch, getElo, updateElo} from '../../redux/slices/matchSlice';
+import {
+  getMatch,
+  getElo,
+  updateElo,
+  selectMatch,
+} from '../../redux/slices/matchSlice';
+import Container from '@material-ui/core/Container';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import HistoryPage from '../HistoryPage';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    display: 'flex',
+    height: 'calc(100vh - 64px)',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingTop: 32,
+    paddingBottom: 32,
+  },
+  actions: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    flex: 1,
+  },
+  card: {
+    flex: 1,
+    margin: 8,
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%',
+  },
+  match: {
+    padding: 16,
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  matchButtons: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    flex: 1,
+    margin: '64px',
+  },
+}));
 
 const HomePageUser = ({ user }) => {
-  const [difficulty, setDifficulty] = useState('');
+  const match = useSelector(selectMatch);
   const [show, setShow] = useState(false);
   const [elo, setElo] = useState(0);
   const [rank, setRank] = useState('Rankless');
@@ -29,9 +83,10 @@ const HomePageUser = ({ user }) => {
     });
   });
 
-  const handleShow = (value) => {
+  const classes = useStyles();
+
+  const handleShow = (difficulty) => {
     setShow(true);
-    setDifficulty(value);
 
     const userObj = JSON.parse(localStorage.getItem('user'));
     const userEmail = userObj.email;
@@ -51,7 +106,7 @@ const HomePageUser = ({ user }) => {
     }
 
     const counter = 2;
-    dispatch(getMatch(userObj._id, userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
+    dispatch(getMatch(userObj._id, userEmail, counter, difficulty)); // will call recursively every 5 seconds until it hits true or all counter tries
 
     setTimeout(() => {
       matchObj =
@@ -64,8 +119,8 @@ const HomePageUser = ({ user }) => {
         history.push('/interview');
       } else {
         setShow(false);
-        alert("No match found! Please try again later!");
-        dispatch(updateElo(userEmail, elo))
+        alert('No match found! Please try again later!');
+        dispatch(updateElo(userEmail, elo));
       }
     }, 6000);
   };
@@ -73,80 +128,155 @@ const HomePageUser = ({ user }) => {
   const handleClose = () => setShow(false);
 
   return (
-    <div>
-      <div className="container-fluid text-center pad-tb-75">
-        <h1 className="display-4">Welcome, {user.nickname}</h1>
-        <h3 className="pt-3 font-italic">
-          We hope you will have a fulfilling experience with PeerPrep today!
-        </h3>
+    <Container className={classes.mainContainer}>
+      <Typography
+        variant="h3"
+        component="h3"
+        gutterBottom
+        style={{ textTransform: 'capitalize' }}
+      >
+        Welcome {user.nickname}
+      </Typography>
+      <Typography gutterBottom>
+        We hope you will have a fulfilling experience with PeerPrep today!
+      </Typography>
 
-        <div className="inner-flex-top pad-tb-75">
-          <div className="flex-50">
-            <div className="container fixed-bg-home pp-box-deco text-center">
-              <h1 className="display-4 pb-5">ELO: {elo}</h1>{' '}
-              {/* TODO: Get real ELO here */}
-              <h3 className="pt-3 pb-3">Your current rank is</h3>
-              <h1 className="display-5 text-blue">{rank}</h1>{' '}
-              {/* TODO: Define constants to map ELO to rank */}
-              <h3 className="pt-3 pb-5 margin-lr">
+      <div className={classes.actions}>
+        <Card className={classes.card}>
+          <CardContent className={classes.content}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              style={{ marginBottom: 24 }}
+            >
+              Profile Information
+            </Typography>
+            <div style={{ flex: 1 }}>
+              <Typography
+                gutterBottom
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                style={{ marginBottom: 16 }}
+              >
+                Your ELO: <Chip label={elo} color="primary" />
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                style={{ marginBottom: 16 }}
+              >
+                Your Rank: <Chip label={rank} color="primary" />
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                style={{ marginBottom: 16 }}
+              >
+                Past PeerPreps:
+              </Typography>
+              <HistoryPage />
+            </div>
+            <div
+              style={{
+                textAlign: 'center',
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+              }}
+            >
+              <Typography className={classes.encourageText}>
                 You are doing well! Keep up the prep!
-              </h3>
-              <Link to="/history">
+              </Typography>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className={classes.card}>
+          <CardContent
+            style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+          >
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              style={{ marginBottom: 24 }}
+            >
+              Start a Session
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="body1"
+              color="textSecondary"
+              component="p"
+              style={{ marginBottom: 16 }}
+            >
+              Choose a question difficulty level and we will match you with a
+              Peer of similar elo as you.
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="body1"
+              color="textSecondary"
+              component="p"
+              style={{ marginBottom: 16 }}
+            >
+              Once the session begins, you will be able to collaborate via a
+              chat interface as well as a collaborative notepad. You many end
+              the session any time and you elo will be adjusted based on the
+              rating given to you by your Peer.
+            </Typography>
+            <Paper className={classes.match}>
+              <Typography
+                gutterBottom
+                variant="body1"
+                component="h2"
+                style={{ marginBottom: 16 }}
+              >
+                Find me a match!
+              </Typography>
+              <div className={classes.matchButtons}>
                 <Button
-                  variant="primary"
-                  size="lg"
-                  className="mt-5 pp-button-long"
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => handleShow('Easy')}
+                  style={{ margin: 8 }}
                 >
-                  View History
+                  Easy <br /> [Recommended Rank: Beginner]
                 </Button>
-              </Link>
-            </div>
-          </div>
-          <div className="flex-50">
-            <div className="container fixed-bg-home pp-box-deco text-center">
-              {/* <h1 className="display-4 pb-5">PeerPrep</h1> */}
-              <img className="small-icon" src="/education.png" alt="Start" />
-              <h3 className="pt-3">Choose your difficulty:</h3>
-
-              <Button
-                variant="primary"
-                className="mt-4 pp-button"
-                name="Easy"
-                onClick={(e) => handleShow(e.target.name)}
-              >
-                Easy
-              </Button>
-              <br />
-
-              <Button
-                variant="primary"
-                className="mt-3 pp-button"
-                name="Medium"
-                onClick={(e) => handleShow(e.target.name)}
-              >
-                Medium
-              </Button>
-              <br />
-
-              <Button
-                variant="primary"
-                className="mt-3 pp-button"
-                name="Hard"
-                onClick={(e) => handleShow(e.target.name)}
-              >
-                Hard
-              </Button>
-            </div>
-          </div>
-        </div>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => handleShow('Medium')}
+                  style={{ margin: 8 }}
+                >
+                  Medium <br /> [Recommended Rank: Newbie]
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => handleShow('Difficult')}
+                  style={{ margin: 8 }}
+                >
+                  Hard <br /> [Recommended Rank: Grandmaster]
+                </Button>
+              </div>
+            </Paper>
+          </CardContent>
+        </Card>
       </div>
       <DifficultyModal
         handleClose={handleClose}
         show={show}
-        difficulty={difficulty}
-      />{' '}
-      {/* Should I abstract here? */}
-    </div>
+        difficulty={match ? match.difficulty : ''}
+      />
+    </Container>
   );
 };
 
