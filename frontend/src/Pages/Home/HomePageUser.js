@@ -114,7 +114,7 @@ const HomePageUser = ({ user }) => {
     }
 
     const counter = 2;
-    dispatch(getMatch(userObj._id, userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
+    dispatch(getMatch(userObj._id, userEmail, counter, difficulty)); // will call recursively every 5 seconds until it hits true or all counter tries
 
     setTimeout(() => {
       matchObj =

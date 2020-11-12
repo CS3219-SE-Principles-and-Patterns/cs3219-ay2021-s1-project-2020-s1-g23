@@ -19,7 +19,7 @@ export const matchSlice = createSlice({
 
 export const { setMatch, setDifficulty } = matchSlice.actions;
 
-export const getMatch = (id, email, counter) => (dispatch) => {
+export const getMatch = (id, email, counter, difficulty) => (dispatch) => {
   if (counter === 0) {
     return;
   }
@@ -46,6 +46,7 @@ export const getMatch = (id, email, counter) => (dispatch) => {
           .then((iresult) => {
             if (iresult.status === 'success') {
               const finalResult = {
+                difficulty,
                 interview_id: iresult['data']['_id'],
                 ...result,
               };
@@ -60,7 +61,7 @@ export const getMatch = (id, email, counter) => (dispatch) => {
       } else if (result.status === false) {
         // recurse with timeout until succeed
         setTimeout(() => {
-          dispatch(getMatch(id, email, nextCounter));
+          dispatch(getMatch(id, email, nextCounter, difficulty));
         }, 5000);
       } else {
         throw new Error(result.message);
