@@ -41,6 +41,7 @@ const useStyles = makeStyles({
     minHeight: 0,
   },
   interviewContent: {
+    maxHeight: 'calc(100% - 132px)',
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
@@ -57,6 +58,9 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  titleText: {
+    height: 132,
   },
 });
 
@@ -80,6 +84,8 @@ function InterviewPage() {
       .then((res) => res.json())
       .then(setQuestion)
       .catch(console.error);
+  }, []);
+  useEffect(() => {
     chatSocket.on('connect', () =>
       setMessages((oldMessages) => [
         ...oldMessages,
@@ -102,7 +108,7 @@ function InterviewPage() {
       console.log(`Receiving: ${data}`);
       setCode(data);
     });
-  }, [sessionId, question]);
+  }, [sessionId]);
   if (!user) {
     history.push('/notauthorised');
   }
@@ -144,32 +150,34 @@ function InterviewPage() {
   return (
     <Layout>
       <Container className={classes.mainContainer}>
-        <Typography
-          variant="h3"
-          component="h3"
-          gutterBottom
-          style={{ textTransform: 'capitalize' }}
-        >
-          Match Found!
-        </Typography>
-        <Typography
-          gutterBottom
-          variant="body1"
-          color="textSecondary"
-          component="p"
-          style={{ textTransform: 'capitalize' }}
-        >
-          Difficulty: {match.difficulty}
-        </Typography>
-        <Typography
-          gutterBottom
-          variant="body1"
-          color="textSecondary"
-          component="p"
-          style={{ textTransform: 'capitalize' }}
-        >
-          Peer: {match.nickname}
-        </Typography>
+        <div className={classes.titleText}>
+          <Typography
+            variant="h3"
+            component="h3"
+            gutterBottom
+            style={{ textTransform: 'capitalize' }}
+          >
+            Match Found!
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="body1"
+            color="textSecondary"
+            component="p"
+            style={{ textTransform: 'capitalize' }}
+          >
+            Difficulty: {match.difficulty}
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="body1"
+            color="textSecondary"
+            component="p"
+            style={{ textTransform: 'capitalize' }}
+          >
+            Peer: {match.nickname}
+          </Typography>
+        </div>
         <div className={classes.interviewContent}>
           <div className={classes.leftPanel}>
             <Card style={{ display: 'flex', flex: 1 }}>
@@ -196,13 +204,13 @@ function InterviewPage() {
               >
                 <div className={classes.chatMessageContainer}>
                   <h3>Question</h3>
-                  <p className="pt-3 text-left">{question.qn}</p>
+                  <p className="pt-3 text-left">{question.question}</p>
                   <p className="pt-3 text-left">{question.input}</p>
                   <p className="pt-3 text-left">{question.output}</p>
                 </div>
               </CardContent>
             </Card>
-            <Card style={{ display: 'flex', flex: 1, margin: '32px 0' }}>
+            <Card style={{ display: 'flex', flex: 2, margin: '32px 0' }}>
               <CardContent
                 style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
               >

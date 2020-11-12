@@ -19,7 +19,7 @@ spec:
         app: chat
     spec:
       containers:
-      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:962e8eca0a4e4871a27657e8b690a9a4001a9f94
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:2e00e977f075f42a92be306798a1d9e6d0256257
         imagePullPolicy: Always
         name: chat
         ports:
