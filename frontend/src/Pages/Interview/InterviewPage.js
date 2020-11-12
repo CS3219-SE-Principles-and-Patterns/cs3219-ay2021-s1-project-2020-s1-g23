@@ -81,6 +81,8 @@ function InterviewPage() {
       .then((res) => res.json())
       .then(setQuestion)
       .catch(console.error);
+  }, []);
+  useEffect(() => {
     chatSocket.on('connect', () =>
       setMessages((oldMessages) => [
         ...oldMessages,
