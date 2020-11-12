@@ -33,7 +33,6 @@ jobs:
       run: |
         # Build and tag the image
         docker build --build-arg DB_URL=${{ secrets.DB_URL }} .
-          
     - name: Push the image into ECR
 #      if: github.ref == 'refs/heads/master'
       run: |
