@@ -19,7 +19,7 @@ spec:
         app: user
     spec:
       containers:
-      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/user:7ffd7f15ded9ff8b54f61951cd273e5503a10a5b
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/user:54d78941a1389cc8976581c9d7a0e1f5b9d8a89f
         imagePullPolicy: Always
         name: user
         ports:
