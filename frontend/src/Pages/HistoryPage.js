@@ -25,13 +25,13 @@ function HistoryPage() {
     history.push('/notauthorised');
   }
   return (
-    <Paper>
+    <Paper style={{ maxHeight: 384 }}>
       {interviews.length === 0 ? (
         <h5 className="pt-5 pb-5 text-center">
           It is so empty over here... Start PeerPrepping!
         </h5>
       ) : (
-        <List color="primary">
+        <List color="primary" style={{ maxHeight: 384, overflowY: 'scroll' }}>
           {interviews.map((intv, i) => (
             <ListItem key={i}>
               <ListItemText

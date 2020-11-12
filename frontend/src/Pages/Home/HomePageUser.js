@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-around',
     flex: 1,
-    margin: '64px',
+    margin: '8px 64px',
   },
 }));
 
