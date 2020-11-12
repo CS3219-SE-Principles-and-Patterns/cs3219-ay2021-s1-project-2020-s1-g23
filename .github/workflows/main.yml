@@ -36,7 +36,7 @@ jobs:
           -t $CONTAINER_IMAGE \
           --build-arg DB_URL=${{ secrets.DB_URL }} \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
     - name: Push the image into ECR
 #      if: github.ref == 'refs/heads/master'
       run: |
