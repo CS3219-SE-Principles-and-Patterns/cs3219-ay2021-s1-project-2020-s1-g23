@@ -9,13 +9,13 @@ export const matchSlice = createSlice({
   name: 'match',
   initialState: persistedMatch,
   reducers: {
-    setMatch: (state, action) => action.payload,
+    setMatch: (state, action) => ({ ...state, ...action.payload }),
   },
 });
 
 export const { setMatch } = matchSlice.actions;
 
-export const getMatch = (id, email, counter) => (dispatch) => {
+export const getMatch = (id, email, counter, difficulty) => (dispatch) => {
   if (counter === 0) {
     return;
   }
@@ -42,6 +42,7 @@ export const getMatch = (id, email, counter) => (dispatch) => {
           .then((iresult) => {
             if (iresult.status === 'success') {
               const finalResult = {
+                difficulty: difficulty,
                 interview_id: iresult['data']['_id'],
                 ...result,
               };

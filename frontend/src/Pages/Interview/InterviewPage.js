@@ -27,6 +27,14 @@ const chatSocket = io('https://api.peerprep.live/chat', {
 });
 
 const useStyles = makeStyles({
+  mainContainer: {
+    display: 'flex',
+    height: 'calc(100vh - 64px)',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingTop: 32,
+    paddingBottom: 32,
+  },
   chatMessageContainer: {
     overflowY: 'auto',
     flexGrow: 1,
@@ -36,7 +44,8 @@ const useStyles = makeStyles({
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    padding: '64px 0',
+    alignItems: 'stretch',
+    padding: '16px 0',
   },
   leftPanel: {
     display: 'flex',
@@ -73,7 +82,6 @@ function InterviewPage() {
     chatSocket.on(sessionId, (message) => {
       if (message.msg === '/end_session') {
         if (message.sender !== user.nickname) {
-          console.log(message, user.nickname);
           setBuddyEndedMsg('Your buddy has ended the session!');
         }
         setShow(true);
@@ -126,10 +134,35 @@ function InterviewPage() {
       payload: event.target.value,
     });
   };
-
   return (
     <Layout>
-      <Container style={{ display: 'flex', height: 'calc(100vh - 77px)' }}>
+      <Container className={classes.mainContainer}>
+        <Typography
+          variant="h3"
+          component="h3"
+          gutterBottom
+          style={{ textTransform: 'capitalize' }}
+        >
+          Match Found!
+        </Typography>
+        <Typography
+          gutterBottom
+          variant="body1"
+          color="textSecondary"
+          component="p"
+          style={{ textTransform: 'capitalize' }}
+        >
+          Difficulty: {match.difficulty}
+        </Typography>
+        <Typography
+          gutterBottom
+          variant="body1"
+          color="textSecondary"
+          component="p"
+          style={{ textTransform: 'capitalize' }}
+        >
+          Peer: {match.nickname}
+        </Typography>
         <div className={classes.interviewContent}>
           <div className={classes.leftPanel}>
             <Card style={{ display: 'flex', flex: 1 }}>
@@ -150,7 +183,7 @@ function InterviewPage() {
           </div>
           <div style={{ width: 32 }} />
           <div className={classes.rightPanel}>
-            <Card style={{ display: 'flex', flex: 1, margin: '16px 0' }}>
+            <Card style={{ display: 'flex', flex: 1, marginBottom: 16 }}>
               <CardContent
                 style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
               >
@@ -224,7 +257,7 @@ function InterviewPage() {
           handleClose={handleClose}
           show={show}
           buddyEndedMsg={buddyEndedMsg}
-        />{' '}
+        />
       </Container>
     </Layout>
   );
