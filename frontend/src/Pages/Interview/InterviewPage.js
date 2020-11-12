@@ -17,6 +17,7 @@ import { selectMatch } from '../../redux/slices/matchSlice';
 import { selectUser } from '../../redux/slices/userSlice';
 import Layout from '../../Templates/Layout';
 
+// const editorSocket = io('localhost:4001/editor', { path: '/editor/new' });
 const editorSocket = io('https://api.peerprep.live/editor', {
   path: '/editor/new',
   forceNew: true,
@@ -73,6 +74,13 @@ function InterviewPage() {
   const classes = useStyles();
   const sessionId = generateSessionId(user.email, match.email);
   useEffect(() => {
+    const difficulty = match.difficulty;
+    fetch(
+      `https://api.peerprep.live/editor/question?sessionId=${sessionId}&difficulty=${difficulty}`
+    )
+      .then((res) => res.json())
+      .then(setQuestion)
+      .catch(console.error);
     chatSocket.on('connect', () =>
       setMessages((oldMessages) => [
         ...oldMessages,
@@ -91,9 +99,6 @@ function InterviewPage() {
         msgContainer.scrollTo(0, msgContainer.scrollHeight);
       }
     });
-    editorSocket.on('Question', (qn, input, output) => {
-      setQuestion({ qn, input, output });
-    });
     editorSocket.on(sessionId, (data) => {
       console.log(`Receiving: ${data}`);
       setCode(data);
@@ -104,6 +109,9 @@ function InterviewPage() {
   }
 
   const handleEndSession = () => {
+    fetch(
+      `https://api.peerprep.live/editor/end-session?sessionId=${sessionId}`
+    ).catch(console.log);
     chatSocket.emit('newMessage', {
       sessionId,
       payload: {
