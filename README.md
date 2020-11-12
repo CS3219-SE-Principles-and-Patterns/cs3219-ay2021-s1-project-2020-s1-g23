@@ -1,3 +1,5 @@
+# Project Report
+View our Project Report [here](Team-23_PeerPrep.pdf)
 # Set Up Process
 ## Step 1: Create ALB Policy
 Go to IAM page and create a need policy. Copy and paste the JSON in the permissions tab. After which copy the Policy ARN and pasted into the varables.tf file, under ALB_role_policy.
