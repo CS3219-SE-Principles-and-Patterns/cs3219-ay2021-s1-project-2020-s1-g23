@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,8 +19,8 @@ spec:
         app: user
     spec:
       containers:
-        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/user:v1
-          imagePullPolicy: Always
-          name: user
-          ports:
-            - containerPort: 5001
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/user:0f5663499ab0bb7a182fffdc294147d04df8c290
+        imagePullPolicy: Always
+        name: user
+        ports:
+        - containerPort: 5001

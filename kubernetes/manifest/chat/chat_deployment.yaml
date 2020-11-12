@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,8 +19,8 @@ spec:
         app: chat
     spec:
       containers:
-        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:v1
-          imagePullPolicy: Always
-          name: chat
-          ports:
-            - containerPort: 5002
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:e16256f10d61289100d4b264a687c336cdf78521
+        imagePullPolicy: Always
+        name: chat
+        ports:
+        - containerPort: 5002
