@@ -60,6 +60,12 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     margin: '8px 64px',
   },
+  profileInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
 }));
 
 const HomePageUser = ({ user }) => {
@@ -153,24 +159,30 @@ const HomePageUser = ({ user }) => {
               Profile Information
             </Typography>
             <div style={{ flex: 1 }}>
-              <Typography
-                gutterBottom
-                variant="body1"
-                color="textSecondary"
-                component="p"
-                style={{ marginBottom: 16 }}
-              >
-                Your ELO: <Chip label={elo} color="primary" />
-              </Typography>
-              <Typography
-                gutterBottom
-                variant="body1"
-                color="textSecondary"
-                component="p"
-                style={{ marginBottom: 16 }}
-              >
-                Your Rank: <Chip label={rank} color="primary" />
-              </Typography>
+              <div className={classes.profileInfo}>
+                <Typography
+                  gutterBottom
+                  variant="body1"
+                  color="textSecondary"
+                  component="span"
+                  style={{ margin: 0, marginRight: 8 }}
+                >
+                  Your ELO:
+                </Typography>
+                <Chip label={elo} color="primary" />
+              </div>
+              <div className={classes.profileInfo}>
+                <Typography
+                  gutterBottom
+                  variant="body1"
+                  color="textSecondary"
+                  component="span"
+                  style={{ margin: 0, marginRight: 8 }}
+                >
+                  Your Rank:
+                </Typography>
+                <Chip label={rank} color="primary" />
+              </div>
               <Typography
                 gutterBottom
                 variant="body1"
