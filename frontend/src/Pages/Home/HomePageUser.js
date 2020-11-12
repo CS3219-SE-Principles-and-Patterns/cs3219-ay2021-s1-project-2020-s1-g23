@@ -242,9 +242,17 @@ const HomePageUser = ({ user }) => {
               style={{ marginBottom: 16 }}
             >
               Once the session begins, you will be able to collaborate via a
-              chat interface as well as a collaborative notepad. You many end
-              the session any time and you elo will be adjusted based on the
-              rating given to you by your Peer.
+              chat interface as well as a collaborative notepad.
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="body1"
+              color="textSecondary"
+              component="p"
+              style={{ marginBottom: 16 }}
+            >
+              You many end the session any time and your elo will be adjusted
+              based on the rating given to you by your Peer.
             </Typography>
             <Paper className={classes.match}>
               <Typography
