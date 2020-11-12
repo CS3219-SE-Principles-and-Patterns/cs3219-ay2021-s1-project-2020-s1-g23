@@ -38,7 +38,7 @@ If you are unfamiliar with 24-hour time notation yourself, you might be interest
       "Output an integer representing the number of ways."
     )
   ],
-  hard: [
+  difficult: [
     craftQn(
       "Given 𝑆, a set of integers, find the largest 𝑑 such that 𝑎+𝑏+𝑐=𝑑 where 𝑎,𝑏,𝑐 and 𝑑 are distinct elements of 𝑆.",
       "The input starts with an integer 1≤𝑁≤4000, the number of elements in 𝑆. It is followed by 𝑁 lines containing the elements of 𝑠, one per line. Each element of 𝑆 is a distinct integer between −536870912 and +536870911, inclusive.",
