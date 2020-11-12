@@ -19,7 +19,7 @@ spec:
         app: match
     spec:
       containers:
-      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/match:962e8eca0a4e4871a27657e8b690a9a4001a9f94
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/match:12444b84241637806002b04b68bc5e5f04b704b4
         imagePullPolicy: Always
         name: match
         ports:
