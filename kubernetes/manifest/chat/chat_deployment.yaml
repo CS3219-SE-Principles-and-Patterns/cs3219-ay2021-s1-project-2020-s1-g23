@@ -1,7 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "chat"
+  annotations:
+    fluxcd.io/automated: "true"
   namespace: "ipp"
   labels:
     app: chat
@@ -16,8 +19,8 @@ spec:
         app: chat
     spec:
       containers:
-        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:v1
-          imagePullPolicy: Always
-          name: chat
-          ports:
-            - containerPort: 5002
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/chat:962e8eca0a4e4871a27657e8b690a9a4001a9f94
+        imagePullPolicy: Always
+        name: chat
+        ports:
+        - containerPort: 5002

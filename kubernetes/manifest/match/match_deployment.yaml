@@ -1,7 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "match"
+  annotations:
+    fluxcd.io/automated: "true"
   namespace: "ipp"
   labels:
     app: match
@@ -16,8 +19,8 @@ spec:
         app: match
     spec:
       containers:
-        - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/match:v1
-          imagePullPolicy: Always
-          name: match
-          ports:
-            - containerPort: 5000
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/match:21eef1ee6219dd1b9396f4c09b741b8003d0e181
+        imagePullPolicy: Always
+        name: match
+        ports:
+        - containerPort: 5000
