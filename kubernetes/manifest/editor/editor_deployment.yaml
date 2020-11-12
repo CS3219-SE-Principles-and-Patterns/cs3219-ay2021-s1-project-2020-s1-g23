@@ -19,7 +19,7 @@ spec:
         app: editor
     spec:
       containers:
-      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/editor:54d78941a1389cc8976581c9d7a0e1f5b9d8a89f
+      - image: 425563513848.dkr.ecr.ap-southeast-1.amazonaws.com/editor:47e575f9ed3d7fb4d9f443fec6ce894b21ab85a7
         imagePullPolicy: Always
         name: editor
         ports:
