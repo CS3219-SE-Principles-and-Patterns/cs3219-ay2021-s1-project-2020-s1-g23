@@ -32,7 +32,7 @@ jobs:
       working-directory: ./backend/match
       run: |
         # Build and tag the image
-        docker build --build-arg DB_URL=${{ secrets.DB_URL }} -f Dockerfile .
+        docker build .
           
     - name: Push the image into ECR
 #      if: github.ref == 'refs/heads/master'
