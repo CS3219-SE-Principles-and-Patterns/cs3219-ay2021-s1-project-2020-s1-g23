@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "user"
+  annotations:
+    fluxcd.io/automated: "true"
   namespace: "ipp"
   labels:
     app: user
