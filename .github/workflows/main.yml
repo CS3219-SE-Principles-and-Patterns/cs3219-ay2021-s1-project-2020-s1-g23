@@ -33,9 +33,11 @@ jobs:
       run: |
         # Build and tag the image
         docker build \
+          -t $CONTAINER_IMAGE \
+          -t latest:$GITHUB_SHA \
           --build-arg DB_URL=${{ secrets.DB_URL }} \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
-
+          
     - name: Push the image into ECR
 #      if: github.ref == 'refs/heads/master'
       run: |
