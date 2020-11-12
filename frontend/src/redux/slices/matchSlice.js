@@ -10,12 +10,16 @@ export const matchSlice = createSlice({
   initialState: persistedMatch,
   reducers: {
     setMatch: (state, action) => ({ ...state, ...action.payload }),
+    setDifficulty: (state, action) => ({
+      ...state,
+      difficulty: action.payload,
+    }),
   },
 });
 
-export const { setMatch } = matchSlice.actions;
+export const { setMatch, setDifficulty } = matchSlice.actions;
 
-export const getMatch = (id, email, counter, difficulty) => (dispatch) => {
+export const getMatch = (id, email, counter) => (dispatch) => {
   if (counter === 0) {
     return;
   }
@@ -42,7 +46,6 @@ export const getMatch = (id, email, counter, difficulty) => (dispatch) => {
           .then((iresult) => {
             if (iresult.status === 'success') {
               const finalResult = {
-                difficulty: difficulty,
                 interview_id: iresult['data']['_id'],
                 ...result,
               };

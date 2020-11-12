@@ -11,6 +11,7 @@ import {
   getElo,
   updateElo,
   selectMatch,
+  setDifficulty,
 } from '../../redux/slices/matchSlice';
 import Container from '@material-ui/core/Container';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -93,6 +94,7 @@ const HomePageUser = ({ user }) => {
 
   const handleShow = (difficulty) => {
     setShow(true);
+    dispatch(setDifficulty(difficulty));
 
     const userObj = JSON.parse(localStorage.getItem('user'));
     const userEmail = userObj.email;
@@ -112,7 +114,7 @@ const HomePageUser = ({ user }) => {
     }
 
     const counter = 2;
-    dispatch(getMatch(userObj._id, userEmail, counter, difficulty)); // will call recursively every 5 seconds until it hits true or all counter tries
+    dispatch(getMatch(userObj._id, userEmail, counter)); // will call recursively every 5 seconds until it hits true or all counter tries
 
     setTimeout(() => {
       matchObj =
