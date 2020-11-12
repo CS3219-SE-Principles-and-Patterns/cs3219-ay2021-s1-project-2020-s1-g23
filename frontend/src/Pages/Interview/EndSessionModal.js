@@ -58,7 +58,7 @@ const EndSessionModal = ({ handleClose, show, buddyEndedMsg }) => {
   };
   return (
     <Modal show={show} onHide={handleClose} backdrop="static">
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Rate your buddy!</Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center">
