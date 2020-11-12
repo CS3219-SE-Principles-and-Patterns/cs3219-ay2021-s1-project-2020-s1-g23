@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "editor-deployment"
+  name: "editor"
   namespace: "ipp"
   labels:
     app: editor

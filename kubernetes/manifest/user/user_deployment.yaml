@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "user-deployment"
+  name: "user"
   namespace: "ipp"
   labels:
     app: user

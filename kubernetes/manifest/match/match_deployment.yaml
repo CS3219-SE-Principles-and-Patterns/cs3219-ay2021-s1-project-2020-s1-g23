@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "match-deployment"
+  name: "match"
   namespace: "ipp"
   labels:
     app: match
