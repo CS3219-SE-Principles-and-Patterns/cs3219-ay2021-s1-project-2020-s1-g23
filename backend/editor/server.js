@@ -14,7 +14,7 @@ const io = require("socket.io")(server, { path: "/editor/new" }).of("/editor");
 const redis = require("redis");
 // const client = redis.createClient();
 const client = redis.createClient({
-  host: "https://redis-cluster.ppg54m.0001.apse1.cache.amazonaws.com",
+  host: "redis-cluster.ppg54m.0001.apse1.cache.amazonaws.com",
   port: 6379
 });
 client.on("connect", () => console.log("Connected to Redis"));
