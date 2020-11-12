@@ -34,7 +34,6 @@ jobs:
         # Build and tag the image
         docker build \
           -t $CONTAINER_IMAGE \
-          -t $GITHUB_REPOSITORY:$GITHUB_SHA \
           --build-arg DB_URL=${{ secrets.DB_URL }} \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE .
     - name: Push the image into ECR
