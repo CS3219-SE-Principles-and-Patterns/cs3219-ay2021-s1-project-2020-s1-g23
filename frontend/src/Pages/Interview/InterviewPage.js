@@ -74,7 +74,7 @@ function InterviewPage() {
   const classes = useStyles();
   const sessionId = generateSessionId(user.email, match.email);
   useEffect(() => {
-    const difficulty = match.difficulty;
+    const difficulty = match.difficulty.toLowerCase();
     fetch(
       `https://api.peerprep.live/editor/question?sessionId=${sessionId}&difficulty=${difficulty}`
     )
